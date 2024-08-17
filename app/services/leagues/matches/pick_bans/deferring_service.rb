@@ -17,11 +17,19 @@ module Leagues
         private
 
         def notify_captains!(pick_ban, kind)
-          msg = "#{pick_ban.roster.name} deferred their map #{kind}"
+          msg = "#{pick_ban.roster.name} deferred their map #{kind_noun(kind)}"
           link = match_path(pick_ban.match)
 
           User.which_can(:edit, pick_ban.other_roster.team).each do |captain|
             Users::NotificationService.call(captain, message: msg, link: link)
+          end
+        end
+
+        def kind_noun(kind)
+          if kind == :ban
+            'ban'
+          else
+            'pick'
           end
         end
       end

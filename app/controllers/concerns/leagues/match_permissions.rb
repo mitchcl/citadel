@@ -18,8 +18,8 @@ module Leagues
     def user_can_confirm_score?
       status = @match.status
 
-      user_can_home_team? && status == 'submitted_by_away_team' ||
-        user_can_away_team? && status == 'submitted_by_home_team'
+      (user_can_home_team? && status == 'submitted_by_away_team') ||
+        (user_can_away_team? && status == 'submitted_by_home_team')
     end
 
     def user_can_submit_team_score?

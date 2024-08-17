@@ -1,14 +1,22 @@
 name: Rails
-on: push
+on:
+  - push
+  - workflow_dispatch
 
 jobs:
   verify:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_WITHOUT: development
+      SECRET_KEY_BASE: ad4d97aef89588c346638cfe689f667f06bc29d2c40724107558e5d4defe723e42cfb294cdb25d7e3241195cfb7cc952e8a2c1680460bea4904bd79d21784307
+      STEAM_API_KEY: abcd1234
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     services:
       postgres:
-        image: postgres:9.5
+        image: postgres:16.2
         env:
           POSTGRES_USER: citadel
           POSTGRES_PASSWORD: citadel
@@ -16,40 +24,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Install ruby
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 2.5.x
-    - name: Setup Cache
-      uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gems-
     - name: Install dependencies
       run: |
-        sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
-        gem install bundler
-        bundle config path vendor/bundle
-        bundle config set --local without 'development'
-        bundle install --jobs 4 --retry 3
+        sudo apt-get -yqq install libpq-dev libyaml-dev build-essential libcurl4-openssl-dev
+    - name: Install ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1.6
+        bundler-cache: true
     - name: Setup database
       env:
         RAILS_ENV: test
         PGHOST: localhost
       run: |
         cp config/database.yml.github config/database.yml
-        cp config/secrets.local.yml.example secrets.local.yml
-        rake "parallel:setup[2]"
+        bundle exec rake "parallel:setup"
     - name: Run tests
       env:
         RAILS_ENV: test
         PGHOST: localhost
-      run: rake test
-    - name: Upload coverage
-      env:
-        RAILS_ENV: test
-        PGHOST: localhost
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: rake codecov:upload
+      run: bundle exec rake test

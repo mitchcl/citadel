@@ -11,7 +11,7 @@ module Forums
 
       return user_can_manage_forums? unless topic
 
-      user_signed_in? && (topic.not_isolated? && user_can_manage_forums? ||
+      user_signed_in? && ((topic.not_isolated? && user_can_manage_forums?) ||
                           user_can_manage_topics?(topic.ancestors) ||
                           current_user.can?(:manage, topic))
     end
@@ -41,7 +41,7 @@ module Forums
 
       return user_can_manage_forums? unless thread
 
-      user_signed_in? && (thread.not_isolated? && user_can_manage_forums? ||
+      user_signed_in? && ((thread.not_isolated? && user_can_manage_forums?) ||
                           user_can_manage_topics?(thread.ancestors) ||
                           current_user.can?(:manage, thread))
     end

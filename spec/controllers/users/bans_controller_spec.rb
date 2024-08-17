@@ -31,7 +31,7 @@ describe Users::BansController do
 
   describe 'POST #create' do
     # Need to round off to the nearest second
-    let(:terminated_at) { Time.zone.at((Time.zone.now + 2.days).to_i) }
+    let(:terminated_at) { Time.zone.at(2.days.from_now.to_i) }
 
     it 'succeeds for authorized user' do
       admin.grant(:edit, :users)
@@ -53,7 +53,7 @@ describe Users::BansController do
       admin.grant(:edit, :users)
       sign_in admin
 
-      terminated_at = Time.zone.now - 2.days
+      terminated_at = 2.days.ago
       post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at },
                               action_: :use, subject: :leagues }
 

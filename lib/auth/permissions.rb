@@ -55,7 +55,11 @@ module Auth
     end
 
     def get_actions_relation(action_model, subject)
-      action_model.where(actor_name => @instances).for(subject)
+      if subject.is_a? ActiveRecord::Base
+        action_model.where(actor_name => @instances, action_model.subject => subject.id)
+      else
+        action_model.where(actor_name => @instances)
+      end
     end
   end
 end

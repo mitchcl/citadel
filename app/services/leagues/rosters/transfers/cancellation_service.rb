@@ -25,7 +25,7 @@ module Leagues
         end
 
         def notify_user(request, user, roster)
-          msg = "The request for you to transfer #{request_msg(request)} "\
+          msg = "The request for you to transfer #{request_msg(request)} " \
                 "#{roster.name} for #{roster.league.name} has been cancelled"
           link = team_path(roster.team)
 

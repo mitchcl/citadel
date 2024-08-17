@@ -25,9 +25,8 @@ You will also need for testing:
 
 * A js runtime supported by [execjs](https://github.com/rails/execjs)
 
-To configure secrets (ie. steam API key) for development, use
-`config/secrets.local.yml`. Example at `config/secrets.local.yml.example`.
-Or put the secrets in environment variables (`SECRET_KEY_BASE`, `STEAM_API_KEY`)
+To configure secrets (ie. steam API key) for development, run `rails
+credentials:edit`.
 
 ## Installing
 

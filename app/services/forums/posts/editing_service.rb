@@ -6,7 +6,7 @@ module Forums
       def call(user, post, params)
         post.transaction do
           post.assign_attributes(params)
-          return post unless post.changed?
+          next unless post.changed?
 
           post.save || rollback!
 

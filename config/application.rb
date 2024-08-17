@@ -14,6 +14,9 @@ module Ozfortress
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.0
 
+    # Use new serialization format
+    config.active_support.cache_format_version = 7.0
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
@@ -30,11 +33,14 @@ module Ozfortress
     # Make view helpers, view specific
     config.action_controller.include_all_helpers = false
 
+    # New lookup logic
+    config.add_autoload_paths_to_load_path = false
+
     # Use dynamic error pages
     config.exceptions_app = self.routes
 
     # News config file
-    config.news = config_for(:news)
+    config.news = config_for(:news).with_indifferent_access
 
     # config.middleware.use 'BadMultipartFormDataSanitizer'
     config.middleware.insert_before Rack::Runtime, BadMultipartFormDataSanitizer

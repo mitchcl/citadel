@@ -4,13 +4,13 @@ class League
       presents :transfer_request
 
       # rubocop:disable Rails/OutputSafety
-      PENDING_MESSAGE = '%{created_by} requested %{user} be transferred %{direction} '\
+      PENDING_MESSAGE = '%{created_by} requested %{user} be transferred %{direction} ' \
                         '%{roster}%{leaving_message}'.html_safe
 
-      APPROVED_MESSAGE = '%{approved_by} approved %{user}\'s transfer %{direction} '\
+      APPROVED_MESSAGE = '%{approved_by} approved %{user}\'s transfer %{direction} ' \
                          '%{roster}%{leaving_message} (requested by %{created_by})'.html_safe
 
-      DENIED_MESSAGE = '%{denied_by} denied %{user}\'s transfer %{direction} '\
+      DENIED_MESSAGE = '%{denied_by} denied %{user}\'s transfer %{direction} ' \
                        '%{roster}%{leaving_message} (requested by %{created_by})'.html_safe
 
       LEAVING_MESSAGE = ', out of %{leaving_roster} in %{division}'.html_safe

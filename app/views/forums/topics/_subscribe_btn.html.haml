@@ -1,4 +1,4 @@
-- subscribed = current_user.forums_subscriptions.where(topic: topic).exists?
+- subscribed = current_user.forums_subscriptions.exists?(topic: topic)
 
 = button_to toggle_subscription_for_forums_topic_path(topic), method: :patch,
             class: "btn btn-sm #{subscribed ? 'btn-danger' : 'btn-primary'}" do

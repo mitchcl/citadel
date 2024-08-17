@@ -99,7 +99,7 @@ module Auth
       end
 
       def actor_id
-        "#{name.underscore}_id".to_sym
+        :"#{name.underscore}_id"
       end
 
       def permissions(collection = nil)

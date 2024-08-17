@@ -54,7 +54,7 @@ describe User do
   end
 
   it 'has avatar' do
-    image = File.open(Rails.root.join('spec', 'support', 'avatar.png'))
+    image = Rails.root.join('spec/support/avatar.png').open
     expect(build(:user, avatar: image)).to be_valid
   end
 
@@ -160,12 +160,12 @@ describe User do
           user.ban(:use, :users)
 
           expect(user.can?(:use, :users)).to be(false)
-          allow(Time.zone).to receive(:now).and_return(Time.zone.now + 10.years)
+          allow(Time.zone).to receive(:now).and_return(10.years.from_now)
           expect(user.can?(:use, :users)).to be(false)
         end
 
         it "can't ban with negative duration" do
-          time = Time.zone.now - 1.minute
+          time = 1.minute.ago
 
           expect do
             user.ban(:use, :users, terminated_at: time)

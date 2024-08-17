@@ -21,7 +21,7 @@ module Leagues
         private
 
         def notify_captains!(user, match)
-          message = "'#{user.name}' posted a message on the match: "\
+          message = "'#{user.name}' posted a message on the match: " \
                     "'#{match.home_team.name}' vs '#{match.away_team.name}'"
           link = match_path(match)
 

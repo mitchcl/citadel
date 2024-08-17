@@ -16,7 +16,7 @@ module Leagues
       disbanded = roster&.disbanded?
 
       user_can_edit_league?(roster.league) ||
-        user_signed_in? && current_user.can?(:edit, roster.team) && user_not_banned? && !disbanded
+        (user_signed_in? && current_user.can?(:edit, roster.team) && user_not_banned? && !disbanded)
     end
 
     def user_can_disband_roster?(roster = nil)

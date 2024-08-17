@@ -28,7 +28,7 @@ class PermissionsController < ApplicationController
 
     excluded_users = users_which_can.select(:id)
     @users_without_permission = target_users.search(params[:q])
-                                            .where('users.id NOT IN (?)', excluded_users)
+                                            .where.not(users: { id: excluded_users })
                                             .paginate(page: params[:page])
   end
 
@@ -85,10 +85,10 @@ class PermissionsController < ApplicationController
   end
 
   def ensure_valid_target
-    redirect_back if subject? && ![:team, :forums_topic].include?(@subject)
+    redirect_back if subject? && [:team, :forums_topic].exclude?(@subject)
   end
 
   def redirect_back(options = {})
-    super({ fallback_location: permissions_path }.merge(options))
+    super(fallback_location: permissions_path, **options)
   end
 end

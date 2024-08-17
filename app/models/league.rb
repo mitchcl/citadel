@@ -21,7 +21,7 @@ class League < ApplicationRecord
 
   has_many :titles, class_name: 'User::Title', dependent: :destroy
 
-  enum status: [:hidden, :running, :completed]
+  enum status: { hidden: 0, running: 1, completed: 2 }
 
   validates :name,        presence: true, length: { in: 1..64 }
   validates :description, presence: true
@@ -52,7 +52,7 @@ class League < ApplicationRecord
   validates :points_per_forfeit_loss, presence: true
 
   # Scheduling
-  enum schedule: [:manual, :weeklies]
+  enum schedule: { manual: 0, weeklies: 1 }
   has_one :weekly_scheduler, inverse_of: :league, class_name: 'League::Schedulers::Weekly',
                              dependent: :destroy
   accepts_nested_attributes_for :weekly_scheduler
@@ -76,7 +76,7 @@ class League < ApplicationRecord
   end)
 
   def entered?(user)
-    players.where(user: user).exists?
+    players.exists?(user: user)
   end
 
   def roster_for(user)

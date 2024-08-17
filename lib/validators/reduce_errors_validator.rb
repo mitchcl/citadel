@@ -5,7 +5,6 @@ class ReduceErrorsValidator < ActiveModel::EachValidator
     errors = record.errors
     return until errors.messages.key? attribute
 
-    error = errors[attribute]
-    error.slice!(-1) until error.size <= 1
+    errors.objects.uniq!(&:attribute)
   end
 end

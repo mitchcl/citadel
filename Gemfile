@@ -1,18 +1,19 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.2.1'
+gem 'rails', '~> 7.1.0'
 gem 'rake', '~> 12.0'
+gem 'sprockets-rails'
 # Use postgres
 gem 'pg', '~> 1.0'
 # Active Record extensions
 gem 'active_record_union', '~> 1.3'
 gem 'ancestry'
 # SASS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6'
 # Compress JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2.0'
+gem 'coffee-rails', '~> 5'
 # Easy styling
 gem 'bootstrap', '~> 4.5.0'
 # Easy bootstrap forms
@@ -48,10 +49,12 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'counter_culture', '~> 2.0'
 # Tournament systems
 gem 'tournament-system', '~> 2.0'
+# Backwards compatibility with ruby 2
+gem 'scanf'
 
 group :test do
   # Use rspec for tests
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 6'
 
   # Parallelize tests
   gem 'parallel_tests'
@@ -66,7 +69,7 @@ group :test do
   gem 'database_cleaner'
 
   # Easy database manipulation
-  gem 'factory_bot_rails', '~> 4'
+  gem 'factory_bot_rails', '~> 6'
 
   # Web feature testing
   gem 'capybara'
@@ -74,9 +77,9 @@ group :test do
   # Keep codebase clean
   gem 'haml_lint', require: false
   gem 'rails_best_practices', require: false
-  gem 'reek', '~> 5', require: false
-  gem 'rubocop', '~> 0.58', require: false
-  gem 'rubocop-rails', '~> 2.2.1', require: false
+  gem 'reek', '~> 6', require: false
+  gem 'rubocop', '~> 1.64.1', require: false
+  gem 'rubocop-rails', '~> 2.25.0', require: false
 
   gem 'codecov', require: false
 end

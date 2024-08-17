@@ -44,8 +44,8 @@ class User
     def name_not_already_used
       return if name.blank?
 
-      if pending? && (User.where(name: name).exists? ||
-                      NameChange.pending.where(name: name).exists?)
+      if pending? && (User.exists?(name: name) ||
+                      NameChange.pending.exists?(name: name))
         errors.add(:name, 'Must be unique')
       end
     end

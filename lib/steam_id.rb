@@ -46,7 +46,7 @@ module SteamId
 
   def from_32_to_64(value)
     account_lower, account_higher = value.scanf('STEAM_0:%d:%d')
-    account_lower + account_higher * 2 + UNIVERSE_0_TYPE_PUBLIC
+    account_lower + (account_higher * 2) + UNIVERSE_0_TYPE_PUBLIC
   end
 
   def from_id3_to_64(value)

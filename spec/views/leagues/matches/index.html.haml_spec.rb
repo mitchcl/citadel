@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'leagues/matches/index' do
-  let(:div) { build(:league_division) }
+  let(:div) { build_stubbed(:league_division) }
   let(:home_team) { build_stubbed(:league_roster) }
   let(:away_team) { build_stubbed(:league_roster) }
 

@@ -54,7 +54,7 @@
 
               / Manually display errors.
               - if player && has_errors
-                - player.errors.each do |_key_, error|
+                - player.errors.each_value do |error|
                   %span.help-block= error
 
         .d-flex.justify-content-end

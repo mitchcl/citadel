@@ -116,9 +116,7 @@ describe 'leagues/matches/show' do
 
     after do
       comms.each do |comm|
-        if view.user_can_edit_league?
-          expect(rendered).to include(comm.created_by.name)
-        elsif comm.exists?
+        if view.user_can_edit_league? || comm.exists?
           expect(rendered).to include(comm.created_by.name)
         else
           expect(rendered).to_not include(comm.created_by.name)

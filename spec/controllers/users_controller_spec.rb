@@ -329,7 +329,7 @@ describe UsersController do
       user.save!
 
       # Jump an hour into the future
-      allow(Time).to receive(:current).and_return(Time.current + 1.hour)
+      allow(Time).to receive(:current).and_return(1.hour.from_now)
 
       patch :confirm_email, params: { token: token }
 

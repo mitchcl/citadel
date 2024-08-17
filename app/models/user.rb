@@ -17,7 +17,7 @@ class User < ApplicationRecord
   private :team_players, :team_players=
   has_many :teams, through: :team_players
   has_many :team_invites, class_name: 'Team::Invite', dependent: :destroy
-  has_many :team_transfers, -> { order(created_at: :desc) }, class_name: 'Team::Transfer'
+  has_many :team_transfers, -> { order(created_at: :desc) }, class_name: 'Team::Transfer', dependent: :destroy
 
   has_many :roster_players, class_name: 'League::Roster::Player', dependent: :restrict_with_exception
   private :roster_players, :roster_players=
@@ -30,7 +30,7 @@ class User < ApplicationRecord
   has_many :forums_posts, class_name: 'Forums::Post', inverse_of: :created_by, foreign_key: :created_by,
                                                       dependent: :destroy
   has_many :public_forums_posts, -> { publicly_viewable }, class_name: 'Forums::Post', inverse_of: :created_by,
-                                                           foreign_key: :created_by
+                                                           foreign_key: :created_by, dependent: :destroy
 
   has_many :logs, class_name: 'User::Log', dependent: :destroy
 

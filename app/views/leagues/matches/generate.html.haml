@@ -26,7 +26,7 @@
           - tournament_systems.each do |system|
             - klass = system == @tournament_system ? 'active' : ''
             .tab-pane{ id: system, class: klass }
-              - data_name = "#{system}_tournament".to_sym
+              - data_name = :"#{system}_tournament"
               - value = instance_variable_get("@#{data_name}")
               = render "leagues/matches/tournament_systems/#{system}_form", f: f, data_name => value
 

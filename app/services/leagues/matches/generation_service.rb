@@ -13,7 +13,7 @@ module Leagues
 
           create_notifications_for_matches(matches)
         rescue League::Division::GenerationError => e
-          return invalid_match(match_params, e)
+          invalid_match = invalid_match(match_params, e)
         end
 
         invalid_match

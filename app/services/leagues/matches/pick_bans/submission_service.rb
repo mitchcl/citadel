@@ -26,7 +26,7 @@ module Leagues
         end
 
         def completed_kind(pick_ban)
-          if pick_ban.pick?
+          if pick_ban.kind_pick?
             'picked'
           else
             'banned'

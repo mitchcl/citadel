@@ -2,6 +2,12 @@ require: rubocop-rails
 
 Rails:
   Enabled: true
+Rails/ActionOrder:
+  Enabled: false
+Rails/I18nLocaleTexts:
+  Enabled: false
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
 Rails/ApplicationRecord:
   Exclude:
     - 'lib/**/*'
@@ -45,6 +51,8 @@ Style/FormatStringToken:
   EnforcedStyle: template
 Style/StringConcatenation:
   Enabled: false
+Style/NegatedIfElseCondition:
+  Enabled: false
 Style/MixinUsage:
   Exclude:
     - 'bin/setup'
@@ -56,6 +64,8 @@ Naming/MethodParameterName:
   MinNameLength: 2
   AllowedNames:
     - _
+Naming/VariableNumber:
+  Enabled: false
 
 # 'old' style
 Style/EmptyMethod:

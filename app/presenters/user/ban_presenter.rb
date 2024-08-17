@@ -11,7 +11,7 @@ class User
     end
 
     def title_text
-      safe_join([expire_s, reason_s], tag(:br))
+      safe_join([expire_s, reason_s], tag.br)
     end
 
     def started_at

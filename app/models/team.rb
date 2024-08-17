@@ -59,13 +59,12 @@ class Team < ApplicationRecord
   end
 
   def on_roster?(user)
-    players.where(user: user).exists?
+    players.exists?(user: user)
   end
 
   def entered?(comp)
     rosters.joins(:division)
-           .where(league_divisions: { league_id: comp.id })
-           .exists?
+           .exists?(league_divisions: { league_id: comp.id })
   end
 
   def reset_query_cache!

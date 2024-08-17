@@ -7,7 +7,7 @@ describe League::Match::PickBan do
 
   it { should belong_to(:map).class_name('Map').optional }
 
-  it { should define_enum_for(:kind).with_values([:pick, :ban, :deferred]) }
+  it { should define_enum_for(:kind).with_values([:pick, :ban, :deferred]).with_prefix('kind') }
 
   it { should define_enum_for(:team).with_values([:home_team, :away_team]) }
 

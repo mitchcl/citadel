@@ -50,7 +50,7 @@ module Auth
       end
 
       def init_singular_subject(options)
-        belongs_to @subject, options
+        belongs_to @subject, **options
         @subject_cls = reflect_on_all_associations(:belongs_to).second.klass
 
         @subject_cls.has_many @association_name, class_name: name, foreign_key: "#{@subject}_id", dependent: :delete_all

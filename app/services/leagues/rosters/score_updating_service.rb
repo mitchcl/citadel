@@ -20,7 +20,7 @@ module Leagues
 
       def call(league, division)
         rosters = division.rosters.select(*SCORE_ATTRIBUTES).to_a
-        roster_id_map = rosters.map { |roster| [roster.id, roster] }.to_h
+        roster_id_map = rosters.index_by(&:id)
 
         # Gather stats for later calculations
         roster_results = Hash.new { |h, k| h[k] = [] }
@@ -35,6 +35,10 @@ module Leagues
           end
 
           away = roster_id_map[match.away_team_id]
+
+          # Ignore matches for teams in different divisions
+          next if home.nil? || away.nil?
+
           home_stats, away_stats = build_match_stats(match)
           roster_results[home].push home_stats
           roster_results[away].push away_stats
@@ -115,7 +119,7 @@ module Leagues
           )
           roster.points = calculate_points(league, roster)
           points_map[roster.points].push roster
-          roster.normalized_round_score = roster.won_rounds_count * 1.0 + roster.drawn_rounds_count * 0.5
+          roster.normalized_round_score = (roster.won_rounds_count * 1.0) + (roster.drawn_rounds_count * 0.5)
         end
 
         # Update scores based on opponents

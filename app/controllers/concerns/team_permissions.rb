@@ -8,7 +8,7 @@ module TeamPermissions
   def user_can_edit_team?(team = nil)
     team ||= @team
 
-    user_signed_in? && current_user.can?(:edit, team) && current_user.can?(:use, :teams) ||
+    (user_signed_in? && current_user.can?(:edit, team) && current_user.can?(:use, :teams)) ||
       user_can_edit_teams?
   end
 

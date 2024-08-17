@@ -17,7 +17,7 @@ begin
   RuboCop::RakeTask.new
   Reek::Rake::Task.new
 
-  task :rbp do
+  task rbp: [:environment] do
     require 'rails_best_practices'
 
     app_root = Rake.application.original_dir
@@ -34,7 +34,7 @@ rescue LoadError
   puts 'Test tasks not available'
 end
 
-task :log do
+task log: [:environment] do
   ActiveRecord::Base.logger = Logger.new($stdout)
 end
 

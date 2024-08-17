@@ -25,6 +25,20 @@ describe PagesController do
 
         expect(response).to have_http_status(:success)
       end
+
+      it 'hides hidden threads' do
+        topic = create(:forums_topic)
+        thread = create(:forums_thread, topic: topic)
+        create(:forums_thread, topic: topic, hidden: true)
+
+        Rails.configuration.news['type'] = 'topic'
+        Rails.configuration.news['id'] = topic.id
+
+        get :home
+
+        expect(response).to have_http_status(:success)
+        expect(controller.view_assigns['threads']).to eq([thread])
+      end
     end
 
     context 'invalid news config' do

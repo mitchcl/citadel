@@ -13,7 +13,7 @@
         - @league.divisions.each do |div|
           - klass = div == @division ? 'active' : ''
 
-          %a.nav-item.nav-link{ data: { toggle: 'tab' }, href: "##{div.to_s.parameterize}", class: klass }
+          %a.nav-item.nav-link{ data: { toggle: 'tab' }, href: "#div-#{div.id.to_s.parameterize}", class: klass }
             %h6.m-0
               = div.name
 
@@ -22,7 +22,7 @@
     - @league.divisions.each do |div|
       - klass = div == @division ? 'active' : ''
 
-      %div{ id: div.to_s.parameterize, class: 'tab-pane ' + klass }
+      %div{ id: "div-#{div.id.to_s.parameterize}", class: 'tab-pane ' + klass }
         = bootstrap_form_for @match, as: :match, url: league_matches_path(@league) do |f|
           = hidden_field_tag :division_id, div.id
 

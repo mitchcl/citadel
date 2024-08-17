@@ -7,8 +7,8 @@ class League
       belongs_to :picked_by, class_name: 'User', optional: true
       belongs_to :map,       class_name: 'Map',  optional: true
 
-      enum kind: [:pick, :ban, :deferred]
-      enum team: [:home_team, :away_team]
+      enum kind: { pick: 0, ban: 1, deferred: 2 }, _prefix: :kind
+      enum team: { home_team: 0, away_team: 1 }
 
       validates :deferrable, inclusion: { in: [true, false] }
 
@@ -20,7 +20,7 @@ class League
       delegate :league, to: :match
 
       def submit(user, map)
-        match.rounds.create!(map: map) if pick?
+        match.rounds.create!(map: map) if kind_pick?
 
         update(picked_by: user, map: map)
       end
@@ -80,7 +80,7 @@ class League
       def map_and_pick_present
         if map
           errors.add(:picked_by, 'Must be present') unless picked_by
-        elsif picked_by && !deferred?
+        elsif picked_by && !kind_deferred?
           errors.add(:map, 'Must be present')
         end
       end

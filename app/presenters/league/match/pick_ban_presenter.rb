@@ -22,7 +22,7 @@ class League
       def status
         if pick_ban.pending?
           safe_join([team.link, pending_kind, deferrable_message], ' ')
-        elsif pick_ban.deferred?
+        elsif pick_ban.kind_deferred?
           safe_join([team.link, ' (', picked_by.link, ') deferred their ', completed_kind_noun])
         else
           safe_join([team.link, ' (', picked_by.link, ') ', completed_kind_verb, ' ', map.link])
@@ -32,7 +32,7 @@ class League
       private
 
       def completed_kind_verb
-        if pick_ban.pick?
+        if pick_ban.kind_pick?
           'picked'
         else
           'banned'
@@ -40,7 +40,7 @@ class League
       end
 
       def completed_kind_noun
-        if pick_ban.pick?
+        if pick_ban.kind_pick?
           'pick'
         else
           'ban'
@@ -48,7 +48,7 @@ class League
       end
 
       def pending_kind
-        if pick_ban.pick?
+        if pick_ban.kind_pick?
           'picks'
         else
           'bans'

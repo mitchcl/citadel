@@ -54,12 +54,11 @@ class League
     after_destroy { League.decrement_counter(:rosters_count, league.id) }
     # rubocop:enable Rails/SkipsModelValidations
 
+    after_initialize :set_defaults, unless: :persisted?
     after_create :trigger_score_update!, if: :approved?
     after_save do
       trigger_score_update! if [:ranking, :seeding, :approved, :disbanded].any? { |a| saved_change_to_attribute?(a) }
     end
-
-    after_initialize :set_defaults, unless: :persisted?
 
     def self.matches
       Match.for_roster(all.map(&:id))
@@ -95,7 +94,7 @@ class League
     end
 
     def on_roster?(user)
-      players.where(user: user).exists?
+      players.exists?(user: user)
     end
 
     def tentative_player_count
@@ -149,7 +148,7 @@ class League
     def unique_within_league
       return if league.blank?
 
-      errors.add(:base, 'Can only sign up once') if league.rosters.where(team: team).exists?
+      errors.add(:base, 'Can only sign up once') if league.rosters.exists?(team: team)
     end
 
     def validate_schedule

@@ -110,7 +110,7 @@ class League
 
     def team_score(symbol)
       if match.no_forfeit?
-        match.rounds.map(&"#{symbol}_score".to_sym).join(':')
+        match.rounds.map(&:"#{symbol}_score").join(':')
       elsif match.send("#{symbol}_forfeit?") || match.mutual_forfeit?
         'ff'
       else
