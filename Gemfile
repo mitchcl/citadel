@@ -51,8 +51,6 @@ gem 'counter_culture', '~> 2.0'
 gem 'tournament-system', '~> 2.0'
 # Backwards compatibility with ruby 2
 gem 'scanf'
-# Bullshit for passenger
-gem "base64", "0.1.1"
 
 group :test do
   # Use rspec for tests
