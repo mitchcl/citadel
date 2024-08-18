@@ -11,7 +11,7 @@ gem 'ancestry'
 # SASS for stylesheets
 gem 'sass-rails', '~> 6'
 # Compress JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'terser', '~> 1.2'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 5'
 # Easy styling

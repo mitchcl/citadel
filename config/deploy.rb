@@ -1,8 +1,8 @@
 # config valid only for current version of Capistrano
-lock '3.17.0'
+lock '3.18.1'
 
 set :application, 'citadel'
-set :rvm_ruby_string, 'ruby-2.5.0'
+set :rvm_ruby_string, 'ruby-3.1.2'
 
 # git settings
 set :repo_url, 'git@github.com:ozfortress/citadel.git'
@@ -23,7 +23,7 @@ set :rails_env, 'production'
 set :pty, true
 
 # Files and folders to keep between deployments
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/credentials.yml.enc', 'master.key', 'config/news.yml')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/credentials/production.yml.enc', 'config/credentials/production.key', 'config/news.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp', 'vendor/bundle', 'public/uploads')
 
 # Default value for default_env is {}

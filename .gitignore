@@ -86,3 +86,4 @@ spec/carrierwave
 # Ignore credentials
 /config/master.key
 /config/credentials.yml.enc
+/config/credentials/*
