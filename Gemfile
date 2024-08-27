@@ -56,6 +56,9 @@ group :test do
   # Use rspec for tests
   gem 'rspec-rails', '~> 6'
 
+  # Extra functionality for rspec-rails
+  gem 'rails-controller-testing'
+
   # Parallelize tests
   gem 'parallel_tests'
 

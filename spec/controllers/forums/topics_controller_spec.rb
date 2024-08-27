@@ -131,6 +131,56 @@ describe Forums::TopicsController do
           expect(response).to redirect_to(forums_path)
         end
       end
+
+      context 'hidden thread' do
+        let(:user2) { create(:user) }
+
+        let!(:hidden_thread) do
+          create(:forums_thread, topic: topic, title: 'Hidden Title', hidden: true, created_by: user2)
+        end
+        let!(:visible_thread) { create(:forums_thread, topic: topic, title: 'Visible Title') }
+
+        it 'is visible for managing user' do
+          user.grant(:manage, topic)
+          sign_in user
+
+          get :show, params: { id: topic.id }
+
+          expect(assigns(:threads)).to contain_exactly(hidden_thread, visible_thread)
+        end
+
+        it 'is visible for creating user' do
+          sign_in user2
+
+          get :show, params: { id: topic.id }
+
+          expect(assigns(:threads)).to contain_exactly(hidden_thread, visible_thread)
+        end
+
+        it 'is hidden for user with permissions to other topic' do
+          topic2 = create(:forums_topic)
+          user.grant(:manage, topic2)
+          sign_in user
+
+          get :show, params: { id: topic.id }
+
+          expect(assigns(:threads)).to eq([visible_thread])
+        end
+
+        it 'is hidden for other user' do
+          sign_in user
+
+          get :show, params: { id: topic.id }
+
+          expect(assigns(:threads)).to eq([visible_thread])
+        end
+
+        it 'is hidden for unauthenticated user' do
+          get :show, params: { id: topic.id }
+
+          expect(assigns(:threads)).to eq([visible_thread])
+        end
+      end
     end
 
     describe 'PATCH #toggle_subscription' do
