@@ -1,7 +1,7 @@
 module MarkdownRenderer
   RENDER_OPTIONS = {
-    hard_wrap: true,
-    tables:    true,
+    hard_wrap:       true,
+    tables:          true,
     safe_links_only: true,
   }.freeze
 

@@ -4,7 +4,10 @@ module API
       def show
         @team = Team.find(params[:id])
 
-        render json: @team, serializer: TeamSerializer, include: ['*', 'teams.users']
+        # Prefetch user permissions
+        User.permissions(@team.users).fetch(:edit, @team)
+
+        render json: @team, serializer: TeamSerializer, include: ['*', 'teams.users'], scope: @team
       end
     end
   end

@@ -8,7 +8,9 @@ module OmniAuth
         super
       end
 
-    private
+      private
+
+      # :reek:UtilityFunction
       def validate_params(fields)
         allowed_params = [
           'openid.ns',

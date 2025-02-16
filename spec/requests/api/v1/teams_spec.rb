@@ -11,6 +11,9 @@ describe API::V1::TeamsController, type: :request do
       players = create_list(:team_player, 3, team: team)
       rosters = create_list(:league_roster, 2, team: team)
 
+      captain = players[0].user
+      captain.grant(:edit, team)
+
       get "#{route}/#{team.id}", headers: { 'X-API-Key' => api_key.key }
 
       json = response.parsed_body
@@ -21,6 +24,7 @@ describe API::V1::TeamsController, type: :request do
       expect(team_h['players'].length).to eq(players.length)
       team_h['players'].each do |user|
         expect(players.map(&:user_id)).to include(user['id'])
+        expect(user['is_captain']).to eq(user['id'] == captain.id)
       end
 
       expect(team_h['rosters'].length).to eq(rosters.length)
