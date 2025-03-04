@@ -17,7 +17,7 @@ gem 'terser', '~> 1.2'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 5'
 # Easy styling
-gem 'bootstrap', '~> 4.5.0'
+gem 'bootstrap', '~> 4.6.2'
 # Easy bootstrap forms
 gem 'bootstrap_form', '~> 4.5'
 # Inline svgs
@@ -30,7 +30,7 @@ gem 'cocoon'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Steam Login
-gem 'omniauth', '~> 1'
+gem 'omniauth', '~> 2'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-steam'
 # Authentication
