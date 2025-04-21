@@ -1,0 +1,211 @@
+// Dark mode styles that are applied when the .dark-mode class is present on html element
+html.dark-mode
+  // Variables for dark mode colors
+  --dark-bg-color: #1e2129
+  --dark-content-bg: #1e2129
+  --dark-card-bg: #272a35
+  --dark-input-bg: #272a35
+  --dark-text-color: #e0e0e0
+  --dark-secondary-text: #aaaaaa
+  --dark-border-color: #3d3d3d
+  --dark-link-color: #79c0ff
+  --dark-link-hover-color: #a5d6ff
+  --dark-navbar-bg: #00abba
+  
+  // Apply dark background and text colors
+  background-color: var(--dark-bg-color)
+  color: var(--dark-text-color)
+  
+  body
+    background-color: var(--dark-bg-color)
+    color: var(--dark-text-color)
+
+  // Navbar
+  .navbar-dark.bg-dark
+    background-color: var(--dark-navbar-bg) !important
+    border-bottom: 1px solid var(--dark-border-color)
+  
+  // Links
+  a:not(.btn)
+    color: var(--dark-link-color)
+    
+    &:hover
+      color: var(--dark-link-hover-color)
+  
+  // Main content area
+  .container#content
+    background-color: transparent
+    
+    // Headings
+    h1, h2, h3, h4, h5
+      color: var(--dark-text-color)
+
+  // Cards
+  .card
+    background-color: var(--dark-card-bg)
+    border-color: var(--dark-border-color)
+    
+    .card-header, .card-footer
+      background-color: rgba(0, 0, 0, 0.2)
+      border-color: var(--dark-border-color)
+    
+    .card-body
+      color: var(--dark-text-color)
+  
+  // Form elements
+  input, textarea, select, .form-control
+    background-color: var(--dark-input-bg) !important
+    color: var(--dark-text-color) !important
+    border-color: var(--dark-border-color) !important
+    
+    &::placeholder
+      color: var(--dark-secondary-text)
+    
+    &:focus
+      box-shadow: 0 0 0 0.2rem rgba(0, 171, 186, 0.25)
+  
+  // Tables
+  .table
+    color: var(--dark-text-color)
+    
+    thead th
+      border-bottom-color: var(--dark-border-color)
+      color: var(--dark-text-color)
+    
+    td, th
+      border-top-color: var(--dark-border-color)
+
+    &-striped tbody tr:nth-of-type(odd)
+      background-color: rgba(255, 255, 255, 0.05)
+  
+  // Buttons - preserve original button styles but adjust for dark mode when needed
+  .btn-secondary
+    background-color: #3a3a3a
+    border-color: #2d2d2d
+  
+  // Dropdown menus
+  .dropdown-menu
+    transition: all 0.2s ease
+    background-color: var(--dark-card-bg)
+    border-color: var(--dark-border-color)
+    
+    .dropdown-item
+      color: var(--dark-text-color)
+      
+      &:hover, &:focus
+        background-color: rgba(255, 255, 255, 0.1)
+    
+    .dropdown-divider
+      border-color: var(--dark-border-color)
+  
+  // Modals
+  .modal-content
+    background-color: var(--dark-content-bg)
+    border-color: var(--dark-border-color)
+    
+    .modal-header, .modal-footer
+      border-color: var(--dark-border-color)
+  
+  // Lists
+  .list-group-item
+    background-color: var(--dark-card-bg)
+    border-color: var(--dark-border-color)
+    color: var(--dark-text-color)
+  
+  // Pagination
+  .pagination
+    .page-link
+      background-color: var(--dark-card-bg)
+      border-color: var(--dark-border-color)
+      color: var(--dark-link-color)
+    
+    .page-item.disabled .page-link
+      background-color: var(--dark-input-bg)
+      border-color: var(--dark-border-color)
+      color: var(--dark-secondary-text)
+    
+    .page-item.active .page-link
+      background-color: #00abba
+      border-color: #00abba
+  
+  // Forum specific styles
+  .forum-thread
+    background-color: var(--dark-card-bg)
+    border: 1px solid var(--dark-border-color)
+  
+  // Code blocks in markdown content
+  pre, code
+    background-color: #1a1a1a
+    border-color: var(--dark-border-color)
+    color: #e0e0e0
+  
+  // Bootstrap badges adjustments
+  .badge
+    // Keep the original colors for badges
+  
+  // Toggle switch customization for dark mode
+  .custom-switch .custom-control-label::before
+    background-color: #4d4d4d
+  
+  .custom-control-input:checked ~ .custom-control-label::before
+    background-color: #00abba
+    
+  // Blockquote styles
+  blockquote
+    background: rgba(255, 255, 255, 0.05)
+    border: 1px solid rgba(255, 255, 255, 0.07)
+    border-left: 5px solid rgba(255, 255, 255, 0.07)
+
+  // Jumbotron styling
+  .jumbotron
+    background-color: var(--dark-card-bg)
+    color: var(--dark-text-color)
+    border-color: var(--dark-border-color)
+
+// Dark mode toggle button styling
+.dark-mode-toggle
+  button
+    border: none
+    outline: none
+    background: transparent
+    
+    i
+      font-size: 1.2rem
+      
+    &:hover
+      color: #f8c76b !important
+      text-decoration: none
+
+// When in dark mode, style the button appropriately
+html.dark-mode
+  .dark-mode-toggle
+    button
+      color: #f8c76b
+      
+      &:hover
+        color: white !important
+
+// Transitions for theme toggling - applied to all elements that need smooth transitions
+// We place these outside the dark-mode selector to ensure they apply to both themes
+body, 
+.container#content,
+h1, h2, h3, h4, h5, 
+.card, .card-header, .card-footer, .card-body,
+.list-group-item,
+.dropdown-menu,
+.modal-content,
+.pagination .page-link,
+.form-control,
+blockquote
+  transition: background-color 0.2s ease, color 0.1s ease, border-color 0.2s ease
+
+// Invert colors for elements with the .dark-mode-invert class in dark mode
+html.dark-mode 
+  img.dark-mode-invert
+    filter: grayscale(1) brightness(0.8) invert(3) !important
+    transition: filter 0.2s ease
+
+// Ensure no filter is applied in light mode
+img.dark-mode-invert
+  filter: none
+  transition: filter 0.2s ease
