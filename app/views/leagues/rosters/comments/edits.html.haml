@@ -13,7 +13,5 @@
     for league
     = link_to @league.name, league_path(@league)
 
-
 - @edits.each do |comment_edit|
-  = render 'shared/comment_edit', comment_edit: comment_edit, class: 'mb-4'
-
+  = render 'shared/comment_edit', comment_edit:, class: 'mb-4'

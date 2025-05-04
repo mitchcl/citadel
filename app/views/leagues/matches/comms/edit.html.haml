@@ -8,7 +8,7 @@
 .card.bg-light.mb-3
   .card-body
     = bootstrap_form_for @comm, as: :comm, url: @comm.paths.update do |f|
-      = render 'form', f: f
+      = render('form', f:)
 
       .d-flex.justify-content-end
         = link_to 'Cancel', match_path(@match), class: 'btn btn-link mr-2'

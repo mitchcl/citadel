@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'forums/threads/show' do
   let(:thread) { build_stubbed(:forums_thread) }
-  let(:posts) { build_stubbed_list(:forums_post, 20, thread: thread) }
+  let(:posts) { build_stubbed_list(:forums_post, 20, thread:) }
 
   it 'displays data' do
     allow(view).to receive(:user_can_manage_thread?).and_return(true)

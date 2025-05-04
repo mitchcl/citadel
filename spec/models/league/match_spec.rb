@@ -66,7 +66,7 @@ describe League::Match do
 
         match.status = :submitted_by_home_team
         match.forfeit_by = :mutual_forfeit
-        match.rounds = [build(:league_match_round, match: match, home_team_score: 0, away_team_score: 0)]
+        match.rounds = [build(:league_match_round, match:, home_team_score: 0, away_team_score: 0)]
 
         match.run_callbacks(:validation) do
           expect(match.status).to eq('confirmed')
@@ -77,10 +77,10 @@ describe League::Match do
 
       it 'updates round outcomes' do
         map = build(:map)
-        rounds = [League::Match::Round.new(map: map, home_team_score: 0, away_team_score: 1),
-                  League::Match::Round.new(map: map, home_team_score: 0, away_team_score: 1),
-                  League::Match::Round.new(map: map, home_team_score: 2, away_team_score: 1)]
-        match = build(:league_match, rounds: rounds, has_winner: true)
+        rounds = [League::Match::Round.new(map:, home_team_score: 0, away_team_score: 1),
+                  League::Match::Round.new(map:, home_team_score: 0, away_team_score: 1),
+                  League::Match::Round.new(map:, home_team_score: 2, away_team_score: 1)]
+        match = build(:league_match, rounds:, has_winner: true)
 
         match.status = :pending
         match.run_callbacks(:validation) do
@@ -132,17 +132,17 @@ describe League::Match do
 
     it 'validates that matches with winners cannot have draws' do
       rounds = build_list(:league_match_round, 3)
-      expect(build(:league_match, rounds: rounds, has_winner: false, allow_round_draws: false)).to be_valid
-      expect(build(:league_match, rounds: rounds, has_winner: false, allow_round_draws: true)).to be_valid
-      expect(build(:league_match, rounds: rounds, has_winner: true, allow_round_draws: false)).to be_valid
-      expect(build(:league_match, rounds: rounds, has_winner: true, allow_round_draws: true)).to be_invalid
+      expect(build(:league_match, rounds:, has_winner: false, allow_round_draws: false)).to be_valid
+      expect(build(:league_match, rounds:, has_winner: false, allow_round_draws: true)).to be_valid
+      expect(build(:league_match, rounds:, has_winner: true, allow_round_draws: false)).to be_valid
+      expect(build(:league_match, rounds:, has_winner: true, allow_round_draws: true)).to be_invalid
     end
 
     it 'validates scores' do
       map = build(:map)
-      round_fn = -> { League::Match::Round.new(map: map) }
+      round_fn = -> { League::Match::Round.new(map:) }
       rounds = [round_fn.call, round_fn.call, round_fn.call]
-      match = build(:league_match, rounds: rounds, has_winner: true, allow_round_draws: false)
+      match = build(:league_match, rounds:, has_winner: true, allow_round_draws: false)
       rounds.each { |round| round.run_callbacks(:save) }
 
       expect(match).to be_valid
@@ -229,12 +229,12 @@ describe League::Match do
   describe 'calculations' do
     it 'calculates score totals before save' do
       map = build(:map)
-      rounds = [League::Match::Round.new(map: map, home_team_score: 0, away_team_score: 1),
-                League::Match::Round.new(map: map, home_team_score: 0, away_team_score: 5),
-                League::Match::Round.new(map: map, home_team_score: 3, away_team_score: 2),
-                League::Match::Round.new(map: map, home_team_score: 2, away_team_score: 2),
-                League::Match::Round.new(map: map, home_team_score: 4, away_team_score: 0)]
-      match = build(:league_match, rounds: rounds, has_winner: false, allow_round_draws: true, status: :confirmed)
+      rounds = [League::Match::Round.new(map:, home_team_score: 0, away_team_score: 1),
+                League::Match::Round.new(map:, home_team_score: 0, away_team_score: 5),
+                League::Match::Round.new(map:, home_team_score: 3, away_team_score: 2),
+                League::Match::Round.new(map:, home_team_score: 2, away_team_score: 2),
+                League::Match::Round.new(map:, home_team_score: 4, away_team_score: 0)]
+      match = build(:league_match, rounds:, has_winner: false, allow_round_draws: true, status: :confirmed)
 
       rounds.each { |round| round.run_callbacks(:save) }
 
@@ -249,13 +249,13 @@ describe League::Match do
   describe 'pick bans' do
     it 'sets order numbers before validation' do
       map = build(:map)
-      rounds = [League::Match::Round.new(map: map)]
+      rounds = [League::Match::Round.new(map:)]
       pick_bans = [
         League::Match::PickBan.new(kind: :pick, team: :home_team, deferrable: true),
         League::Match::PickBan.new(kind: :ban,  team: :home_team, deferrable: false),
         League::Match::PickBan.new(kind: :pick, team: :away_team, deferrable: false),
       ]
-      match = build(:league_match, rounds: rounds, pick_bans: pick_bans, has_winner: false, allow_round_draws: false)
+      match = build(:league_match, rounds:, pick_bans:, has_winner: false, allow_round_draws: false)
 
       expect(match.valid?).to be(true)
 

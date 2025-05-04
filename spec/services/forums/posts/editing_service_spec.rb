@@ -7,7 +7,7 @@ describe Forums::Posts::EditingService do
   let(:content) { 'ABCDEFGHIJKLMNOP' }
 
   it 'succesfully edits a post' do
-    subject.call(user, post, content: content)
+    subject.call(user, post, content:)
 
     expect(post).to_not be_changed
     expect(post.created_by).to eq(creator)
@@ -15,7 +15,7 @@ describe Forums::Posts::EditingService do
   end
 
   it 'creates post edit history' do
-    subject.call(user, post, content: content)
+    subject.call(user, post, content:)
 
     expect(post.edits.count).to eq(1)
     edit = post.edits.first

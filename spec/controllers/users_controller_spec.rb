@@ -234,7 +234,7 @@ describe UsersController do
     end
 
     it 'fails if name change is already pending' do
-      create(:user_name_change, user: user, name: 'B')
+      create(:user_name_change, user:, name: 'B')
       sign_in user
 
       post :request_name_change, params: { id: user.id, name_change: { name: 'C' } }
@@ -265,7 +265,7 @@ describe UsersController do
 
   describe 'PATCH #handle_name_change' do
     let(:user) { create(:user, name: 'A') }
-    let(:name_change) { create(:user_name_change, user: user, name: 'B') }
+    let(:name_change) { create(:user_name_change, user:, name: 'B') }
     let(:admin) { create(:user) }
     before { admin.grant(:edit, :users) }
 
@@ -316,7 +316,7 @@ describe UsersController do
       token = user.generate_confirmation_token
       user.save!
 
-      patch :confirm_email, params: { token: token }
+      patch :confirm_email, params: { token: }
 
       user.reload
       expect(user).to be_confirmed
@@ -331,7 +331,7 @@ describe UsersController do
       # Jump an hour into the future
       allow(Time).to receive(:current).and_return(1.hour.from_now)
 
-      patch :confirm_email, params: { token: token }
+      patch :confirm_email, params: { token: }
 
       user.reload
       expect(user).to_not be_confirmed

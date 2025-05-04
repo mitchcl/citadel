@@ -18,10 +18,10 @@ describe League::Match::PickBan do
     it 'validates successfully' do
       pick_ban = build(:league_match_pick_ban, map: nil, picked_by: nil)
       expect(pick_ban).to be_valid
-      pick_ban.assign_attributes(map: map, picked_by: user)
+      pick_ban.assign_attributes(map:, picked_by: user)
       expect(pick_ban).to be_valid
 
-      pick_ban.assign_attributes(map: map, picked_by: nil)
+      pick_ban.assign_attributes(map:, picked_by: nil)
       expect(pick_ban).to be_invalid
       pick_ban.assign_attributes(map: nil, picked_by: user)
       expect(pick_ban).to be_invalid
@@ -58,10 +58,10 @@ describe League::Match::PickBan do
     let(:match) { create(:league_match) }
 
     before do
-      @picked = create(:league_match_pick_ban, match: match, picked_by: other_user, map: map,
+      @picked = create(:league_match_pick_ban, match:, picked_by: other_user, map:,
                                                team: :home_team, order_number: 0)
-      @deferrable = create(:league_match_pick_ban, match: match, deferrable: true, team: :away_team, order_number: 1)
-      @pending = create(:league_match_pick_ban, match: match, team: :home_team, order_number: 2)
+      @deferrable = create(:league_match_pick_ban, match:, deferrable: true, team: :away_team, order_number: 1)
+      @pending = create(:league_match_pick_ban, match:, team: :home_team, order_number: 2)
     end
 
     it 'successfully defers' do

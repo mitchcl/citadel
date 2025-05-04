@@ -20,7 +20,7 @@ module Leagues
         link = match_path(match)
 
         users_to_notify(match).find_each do |user|
-          Users::NotificationService.call(user, message: msg, link: link)
+          Users::NotificationService.call(user, message: msg, link:)
         end
       end
 

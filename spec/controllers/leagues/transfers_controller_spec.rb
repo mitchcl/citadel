@@ -3,12 +3,12 @@ require 'rails_helper'
 describe Leagues::TransfersController do
   let(:user) { create(:user) }
   let!(:league) { create(:league, matches_submittable: true) }
-  let!(:div) { create(:league_division, league: league) }
+  let!(:div) { create(:league_division, league:) }
   let(:player) { create(:user) }
   let(:captain) { create(:user) }
   let(:roster) { create(:league_roster, division: div) }
   let(:transfer_request) do
-    create(:league_roster_transfer_request, propagate: true, roster: roster, user: player)
+    create(:league_roster_transfer_request, propagate: true, roster:, user: player)
   end
 
   before do

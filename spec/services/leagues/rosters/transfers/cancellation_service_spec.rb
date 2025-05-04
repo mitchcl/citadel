@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Leagues::Rosters::Transfers::CancellationService do
   let(:roster) { create(:league_roster) }
   let(:user) { create(:user) }
-  let(:transfer_request) { create(:league_roster_transfer_request, roster: roster, user: user) }
+  let(:transfer_request) { create(:league_roster_transfer_request, roster:, user:) }
 
   before do
     roster.team.add_player!(user)

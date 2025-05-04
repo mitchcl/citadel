@@ -5,7 +5,7 @@ module Leagues
         include BaseService
 
         def call(creator, roster, params)
-          comment_params = params.merge(roster: roster, created_by: creator)
+          comment_params = params.merge(roster:, created_by: creator)
           comment = League::Roster::Comment.new(comment_params)
 
           comment.transaction do

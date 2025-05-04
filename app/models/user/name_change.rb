@@ -20,7 +20,7 @@ class User
     def approve(user, approved)
       if approved
         self.approved_by = user
-        self.user.update!(name: name)
+        self.user.update!(name:)
       else
         self.denied_by = user
       end
@@ -44,8 +44,8 @@ class User
     def name_not_already_used
       return if name.blank?
 
-      if pending? && (User.exists?(name: name) ||
-                      NameChange.pending.exists?(name: name))
+      if pending? && (User.exists?(name:) ||
+                      NameChange.pending.exists?(name:))
         errors.add(:name, 'Must be unique')
       end
     end

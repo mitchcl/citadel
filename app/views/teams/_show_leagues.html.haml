@@ -9,9 +9,11 @@
         .card-header.bg-warning League Penalties
         .card-body.markdown= roster_p.notice
         .card-footer
-          %small You can find more information regarding League Penalties #{link_to 'here', 'https://docs.ozfortress.com/rules/penalties/'}.
+          %small
+            You can find more information regarding League Penalties
+            #{link_to 'here', 'https://docs.ozfortress.com/rules/penalties/'}.
 
-    = render 'teams/show_roster', team: team, roster: roster, roster_p: roster_p, users: users, matches: matches
+    = render('teams/show_roster', team:, roster:, roster_p:, users:, matches:)
 
 - unless past_rosters.empty?
   %h5 Past Rosters
@@ -26,7 +28,8 @@
         .card-body.markdown= roster_p.notice
       .alert.alert-info.mb-3
         .alert-heading
-          You can find more information regarding League Penalties #{link_to 'here', 'https://docs.ozfortress.com/rules/penalties/'}.
+          You can find more information regarding League Penalties
+          #{link_to 'here', 'https://docs.ozfortress.com/rules/penalties/'}.
 
 
-    = render 'teams/show_roster', team: team, roster: roster, roster_p: roster_p, users: users, matches: matches
+    = render('teams/show_roster', team:, roster:, roster_p:, users:, matches:)

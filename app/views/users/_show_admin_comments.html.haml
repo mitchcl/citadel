@@ -5,7 +5,7 @@
   %hr.mt-0
 
   - comments.each do |c|
-    - options = { user: user, comment: c, quote_id: 'wmd-input-new-user-comment' }
+    - options = { user:, comment: c, quote_id: 'wmd-input-new-user-comment' }
 
     - if c.exists?
       = render 'shared/comment', options
@@ -15,7 +15,7 @@
     %hr
 
   = bootstrap_form_for comment, as: :comment, url: user_comments_path(user) do |f|
-    = render 'users/comments/form', f: f
+    = render('users/comments/form', f:)
 
     .d-flex.justify-content-end
       = f.primary 'Post'

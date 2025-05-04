@@ -13,7 +13,7 @@ describe Leagues::Matches::Comms::CreationService do
   end
 
   it 'user successfully posts a comm' do
-    comm = subject.call(user, match, content: content)
+    comm = subject.call(user, match, content:)
 
     expect(comm).to be_valid
     expect(comm.content).to eq(content)
@@ -24,7 +24,7 @@ describe Leagues::Matches::Comms::CreationService do
   end
 
   it 'captain successfully submits a ban' do
-    comm = subject.call(home_captain, match, content: content)
+    comm = subject.call(home_captain, match, content:)
 
     expect(comm).to be_valid
     expect(comm.content).to eq(content)

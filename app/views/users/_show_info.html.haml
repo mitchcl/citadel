@@ -24,7 +24,7 @@ Joined on #{user_p.created_at_date}
             = button_to leave_team_path(team), method: :patch, class: 'btn btn-danger' do
               Leave
               = inline_svg_tag 'open_iconic/x.svg', class: 'icon ml-2'
-        = render 'teams/listing', team: team
+        = render('teams/listing', team:)
 
 - unless team_transfers.empty?
   %h5 Transfers

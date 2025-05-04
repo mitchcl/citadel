@@ -31,25 +31,26 @@
       %span= @user.steam_id
 
     .row.align-items-center.steam-link.mt-2
-      = link_to "STEAMID.UK", 'https://steamid.uk/profile/' + @user.steam_id.to_s, class: 'steam_link'
-      %span.mx-2='·'
-      = link_to "STEAMHISTORY.NET", 'https://steamhistory.net/id/' + @user.steam_id.to_s, class: 'steam_link'
-      %span.mx-2='|'
-      = link_to "LOGS.TF", 'https://logs.tf/profile/' + @user.steam_id.to_s, class: 'steam_link'
-      %span.mx-2='·'
-      = link_to "MORE.TF", 'https://more.tf/profile/' + @user.steam_id.to_s, class: 'steam_link'
-      %span.mx-2='·'
-      = link_to "TRENDS.TF", 'https://trends.tf/player/' + @user.steam_id.to_s, class: 'steam_link'
-      %span.mx-2='·'
-      = link_to "DEMOS.TF", 'https://demos.tf/profiles/' + @user.steam_id.to_s, class: 'steam_link'
-      %span.mx-2='·'
-      = link_to "RGL", 'https://rgl.gg/public/PlayerProfile.aspx?p=' + @user.steam_id.to_s, class: 'steam_link'
-      %span.mx-2='·'
-      = link_to "ETF2L", 'https://etf2l.org/search/' + @user.steam_id.to_s, class: 'steam_link'
-      %span.mx-2='·'
-      = link_to "UGC", 'https://www.ugcleague.com/players_page.cfm?player_id=' + @user.steam_id.to_s, class: 'steam_link'
-      %span.mx-2='·'
-      = link_to "CLTF2", 'https://cltf2.com/users/steam_id/' + @user.steam_id.to_s, class: 'steam_link'
+      = link_to 'STEAMID.UK', 'https://steamid.uk/profile/' + @user.steam_id.to_s, class: 'steam_link'
+      %span.mx-2= '·'
+      = link_to 'STEAMHISTORY.NET', 'https://steamhistory.net/id/' + @user.steam_id.to_s, class: 'steam_link'
+      %span.mx-2= '|'
+      = link_to 'LOGS.TF', 'https://logs.tf/profile/' + @user.steam_id.to_s, class: 'steam_link'
+      %span.mx-2= '·'
+      = link_to 'MORE.TF', 'https://more.tf/profile/' + @user.steam_id.to_s, class: 'steam_link'
+      %span.mx-2= '·'
+      = link_to 'TRENDS.TF', 'https://trends.tf/player/' + @user.steam_id.to_s, class: 'steam_link'
+      %span.mx-2= '·'
+      = link_to 'DEMOS.TF', 'https://demos.tf/profiles/' + @user.steam_id.to_s, class: 'steam_link'
+      %span.mx-2= '·'
+      = link_to 'RGL', 'https://rgl.gg/public/PlayerProfile.aspx?p=' + @user.steam_id.to_s, class: 'steam_link'
+      %span.mx-2= '·'
+      = link_to 'ETF2L', 'https://etf2l.org/search/' + @user.steam_id.to_s, class: 'steam_link'
+      %span.mx-2= '·'
+      = link_to 'UGC', 'https://www.ugcleague.com/players_page.cfm?player_id=' + @user.steam_id.to_s,
+                class: 'steam_link'
+      %span.mx-2= '·'
+      = link_to 'CLTF2', 'https://cltf2.com/users/steam_id/' + @user.steam_id.to_s, class: 'steam_link'
 
 .row.mb-3
   != present_collection(@titles).map(&:icon).join(' ')
@@ -77,7 +78,10 @@
     .card-header.bg-warning Player Behaviour Infractions & League Penalties
     .card-body.markdown= user_p.notice
     .card-footer
-      %small You can find more information regarding Player Behaviour Infractions #{link_to 'here', 'https://docs.ozfortress.com/rules/infractions/'}, and League Penalties #{link_to 'here', 'https://docs.ozfortress.com/rules/penalties/'}.
+      %small
+        You can find more information regarding Player Behaviour Infractions
+        #{link_to 'here', 'https://docs.ozfortress.com/rules/infractions/'},
+        and League Penalties #{link_to 'here', 'https://docs.ozfortress.com/rules/penalties/'}.
 
 .nav.nav-tabs{ role: 'tablist' }
   %a.nav-item.nav-link.active#info-tab{ href: '#info', role: 'tab', data: { toggle: 'tab' },
@@ -93,7 +97,7 @@
 
 .tab-content.mt-3
   .tab-pane.show.active#info{ role: 'tabpanel', aria: { labelledby: 'info-tab' } }
-    = render 'users/show_info', user: @user, user_p: user_p, matches: @matches,
+    = render 'users/show_info', user: @user, user_p:, matches: @matches,
                                 teams: @teams, team_transfers: @team_transfers
   - unless @roster_transfers.empty?
     .tab-pane#leagues{ role: 'tabpanel', aria: { labelledby: 'leagues-tab' } }

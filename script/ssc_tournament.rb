@@ -50,7 +50,7 @@ end
 def book_server(user)
   query = {
     key:   SSC_API_KEY,
-    user:  user,
+    user:,
     hours: MAX_MATCH_LENGTH,
   }
   result = Net::HTTP.post_form(URI.parse(SSC_ENDPOINT + "/bookings/?#{query.to_query}"), {})
@@ -114,8 +114,8 @@ def book_servers
     end
 
     connect_string = strip_rcon connect_string
-    notice = format(ACTIVE_MATCH_NOTICE_TEMPLATE, connect_string: connect_string)
-    match.update!(script_state: user, notice: notice)
+    notice = format(ACTIVE_MATCH_NOTICE_TEMPLATE, connect_string:)
+    match.update!(script_state: user, notice:)
     notify_users(match, 'The server for your match is now available')
     puts "Booked: #{user} for #{match_s(match)} ; #{match_url(match)}"
   end
@@ -126,7 +126,7 @@ def notify_users(match, message)
   users = match.home_team.users.union(match.away_team.users)
 
   users.find_each do |user|
-    Users::NotificationService.call(user, message: message, link: url)
+    Users::NotificationService.call(user, message:, link: url)
   end
 end
 
@@ -153,7 +153,7 @@ def generate(round)
   league.divisions.each do |division|
     match_params = { round_number: round, notice: MATCH_NOTICE_TEMPLATE }.merge(MATCH_PARAMS)
 
-    invalid = Leagues::Matches::GenerationService.call(division, match_params, :single_elimination, round: round)
+    invalid = Leagues::Matches::GenerationService.call(division, match_params, :single_elimination, round:)
 
     if invalid
       p invalid.errors

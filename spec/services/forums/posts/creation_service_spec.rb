@@ -6,7 +6,7 @@ describe Forums::Posts::CreationService do
   let(:content) { 'ABCDEFGHIJKLMNOP' }
 
   it 'succesfully creates a post' do
-    post = subject.call(user, thread, content: content)
+    post = subject.call(user, thread, content:)
 
     expect(post).to_not be(nil)
     expect(post.created_by).to eq(user)
@@ -22,7 +22,7 @@ describe Forums::Posts::CreationService do
     thread.subscriptions.create!(user: subscribed)
     unrelated = create(:user)
 
-    subject.call(user, thread, content: content)
+    subject.call(user, thread, content:)
 
     expect(subscribed.notifications.size).to eq(1)
     expect(unrelated.notifications).to be_empty

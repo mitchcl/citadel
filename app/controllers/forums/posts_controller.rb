@@ -71,7 +71,7 @@ module Forums
     def path_for(post)
       page = Post.page_of(post)
 
-      forums_thread_path(post.thread, page: page, anchor: "post_#{post.id}")
+      forums_thread_path(post.thread, page:, anchor: "post_#{post.id}")
     end
 
     def post_params

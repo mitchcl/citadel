@@ -136,9 +136,9 @@ describe Forums::TopicsController do
         let(:user2) { create(:user) }
 
         let!(:hidden_thread) do
-          create(:forums_thread, topic: topic, title: 'Hidden Title', hidden: true, created_by: user2)
+          create(:forums_thread, topic:, title: 'Hidden Title', hidden: true, created_by: user2)
         end
-        let!(:visible_thread) { create(:forums_thread, topic: topic, title: 'Visible Title') }
+        let!(:visible_thread) { create(:forums_thread, topic:, title: 'Visible Title') }
 
         it 'is visible for managing user' do
           user.grant(:manage, topic)
@@ -189,17 +189,17 @@ describe Forums::TopicsController do
 
         patch :toggle_subscription, params: { id: topic.id }
 
-        expect(user.forums_subscriptions.where(topic: topic)).to exist
+        expect(user.forums_subscriptions.where(topic:)).to exist
         expect(response).to redirect_to(forums_topic_path(topic))
       end
 
       it 'subsubscribes subscribed user' do
         sign_in user
-        user.forums_subscriptions.create(topic: topic)
+        user.forums_subscriptions.create(topic:)
 
         patch :toggle_subscription, params: { id: topic.id }
 
-        expect(user.forums_subscriptions.where(topic: topic)).to_not exist
+        expect(user.forums_subscriptions.where(topic:)).to_not exist
         expect(response).to redirect_to(forums_topic_path(topic))
       end
 

@@ -11,9 +11,9 @@ class League
     delegate :points, to: :roster
     delegate :==, to: :roster
 
-    def link(label = nil, options = {}, &block)
+    def link(label = nil, options = {}, &)
       label ||= name
-      link_to(label, team_path(roster.team_id), options, &block)
+      link_to(label, team_path(roster.team_id), options, &)
     end
 
     def title

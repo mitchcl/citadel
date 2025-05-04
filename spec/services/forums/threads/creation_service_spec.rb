@@ -6,7 +6,7 @@ describe Forums::Threads::CreationService do
   let(:content) { 'ABCDEFGHIJKLMNOP' }
 
   it 'succesfully creates a thread' do
-    thread = subject.call(user, topic, { title: 'Bar' }, content: content)
+    thread = subject.call(user, topic, { title: 'Bar' }, content:)
 
     expect(thread).to_not be(nil)
     expect(thread.created_by).to eq(user)
@@ -22,7 +22,7 @@ describe Forums::Threads::CreationService do
     topic.subscriptions.create!(user: subscribed)
     unrelated = create(:user)
 
-    subject.call(user, topic, { title: 'Bar' }, content: content)
+    subject.call(user, topic, { title: 'Bar' }, content:)
 
     expect(subscribed.notifications.size).to eq(1)
     expect(unrelated.notifications).to be_empty
@@ -33,7 +33,7 @@ describe Forums::Threads::CreationService do
     subscribed = create(:user)
     topic.subscriptions.create!(user: subscribed)
 
-    thread = subject.call(user, topic, {}, content: content)
+    thread = subject.call(user, topic, {}, content:)
 
     expect(thread).to be_invalid
     expect(thread.posts.first).to be_valid
@@ -61,7 +61,7 @@ describe Forums::Threads::CreationService do
     admin_subscribed.grant(:manage, topic)
     topic.subscriptions.create!(user: admin_subscribed)
 
-    thread = subject.call(user, topic, { title: 'Bar' }, content: content)
+    thread = subject.call(user, topic, { title: 'Bar' }, content:)
 
     expect(thread).to be_valid
     expect(thread).to be_isolated

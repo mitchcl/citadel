@@ -65,12 +65,12 @@ describe League::Roster do
       div = build(:league_division, league: comp)
       team = create(:team)
 
-      roster = build(:league_roster, division: div, team: team)
+      roster = build(:league_roster, division: div, team:)
       expect(roster).to be_valid
       roster.save!
 
       div2 = build(:league_division, league: comp)
-      roster = build(:league_roster, division: div2, team: team)
+      roster = build(:league_roster, division: div2, team:)
       expect(roster).to be_invalid
     end
   end
@@ -117,7 +117,7 @@ describe League::Roster do
     it 'deletes all pending transfer requests' do
       admin = create(:user)
       completed_requests = create_list(:league_roster_transfer_request, 3, approved_by: admin)
-      pending_requests = create_list(:league_roster_transfer_request, 3, propagate: true, roster: roster)
+      pending_requests = create_list(:league_roster_transfer_request, 3, propagate: true, roster:)
 
       roster.disband
 

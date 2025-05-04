@@ -37,7 +37,7 @@ describe Users::BansController do
       admin.grant(:edit, :users)
       sign_in admin
 
-      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at },
+      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: },
                               action_: :use, subject: :leagues }
 
       expect(user.can?(:use, :leagues)).to be false
@@ -54,7 +54,7 @@ describe Users::BansController do
       sign_in admin
 
       terminated_at = 2.days.ago
-      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at },
+      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: },
                               action_: :use, subject: :leagues }
 
       expect(user.can?(:use, :leagues)).to be true
@@ -64,14 +64,14 @@ describe Users::BansController do
     it 'redirects for unauthorized user' do
       sign_in admin
 
-      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at },
+      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: },
                               action_: :use, subject: :leagues }
 
       expect(response).to redirect_to(user_path(user))
     end
 
     it 'redirects for unauthenticated user' do
-      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: terminated_at },
+      post :create, params: { user_id: user.id, ban: { reason: 'foo', terminated_at: },
                               action_: :use, subject: :leagues }
 
       expect(response).to redirect_to(user_path(user))

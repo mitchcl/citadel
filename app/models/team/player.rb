@@ -6,11 +6,11 @@ class Team
     validates :user, uniqueness: { scope: :team }
 
     after_create do
-      team.transfers.create(user: user, is_joining: true)
+      team.transfers.create(user:, is_joining: true)
     end
 
     after_destroy do
-      team.transfers.create(user: user, is_joining: false)
+      team.transfers.create(user:, is_joining: false)
     end
   end
 end

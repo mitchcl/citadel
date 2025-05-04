@@ -190,7 +190,7 @@ describe Leagues::MatchesController do
 
   context 'existing match' do
     let!(:match) { create(:league_match, home_team: @team1, away_team: @team2) }
-    let!(:round) { create(:league_match_round, match: match) }
+    let!(:round) { create(:league_match_round, match:) }
 
     describe 'GET #show' do
       it 'succeeds' do
@@ -257,7 +257,7 @@ describe Leagues::MatchesController do
     end
 
     describe 'PATCH #submit' do
-      let!(:round) { create(:league_match_round, match: match) }
+      let!(:round) { create(:league_match_round, match:) }
 
       it 'succeeds for admin user' do
         sign_in @admin
@@ -381,7 +381,7 @@ describe Leagues::MatchesController do
       end
 
       let!(:round) do
-        create(:league_match_round, match: match, home_team_score: 2, away_team_score: 3)
+        create(:league_match_round, match:, home_team_score: 2, away_team_score: 3)
       end
 
       it 'succeeds for admin user' do
@@ -413,7 +413,7 @@ describe Leagues::MatchesController do
     end
 
     describe 'PATCH #forfeit' do
-      let!(:round) { create(:league_match_round, match: match) }
+      let!(:round) { create(:league_match_round, match:) }
 
       it 'succeeds for home team authorized user' do
         sign_in @captain1

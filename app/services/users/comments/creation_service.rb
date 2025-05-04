@@ -4,7 +4,7 @@ module Users
       include BaseService
 
       def call(creator, user, params)
-        comment_params = params.merge(user: user, created_by: creator)
+        comment_params = params.merge(user:, created_by: creator)
         comment = User::Comment.new(comment_params)
 
         comment.transaction do

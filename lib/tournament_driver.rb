@@ -32,7 +32,7 @@ class TournamentDriver < TournamentSystem::Driver
   end
 
   def matches
-    @matches ||= @division.matches.order(:id).where('round_number >= ?', @starting_round).to_a
+    @matches ||= @division.matches.order(:id).where(round_number: @starting_round..).to_a
   end
 
   def seeded_teams
@@ -62,7 +62,7 @@ class TournamentDriver < TournamentSystem::Driver
   end
 
   def build_match(home_team, away_team)
-    options = @match_options.merge(home_team: home_team, away_team: away_team)
+    options = @match_options.merge(home_team:, away_team:)
     @created_matches << League::Match.new(options)
   end
 end

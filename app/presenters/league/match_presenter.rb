@@ -30,9 +30,9 @@ class League
       match_s(&:link)
     end
 
-    def link(label = nil, options = {}, &block)
+    def link(label = nil, options = {}, &)
       label ||= to_s
-      link_to(label, match_path(match), options, &block)
+      link_to(label, match_path(match), options, &)
     end
 
     def players
@@ -93,11 +93,11 @@ class League
       end
     end
 
-    def match_s(&block)
+    def match_s(&)
       round = short_round_s
       round += ':' if round.present?
 
-      safe_join([round, match_name(&block)], ' ')
+      safe_join([round, match_name(&)], ' ')
     end
 
     def match_name

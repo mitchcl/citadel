@@ -26,7 +26,7 @@ describe 'leagues/show' do
     allow(league).to receive(:ordered_rosters_by_division).and_return(ordered_rosters)
 
     tiebreakers = League::Tiebreaker.kinds.map do |kind, _|
-      build_stubbed(:league_tiebreaker, kind: kind)
+      build_stubbed(:league_tiebreaker, kind:)
     end
     allow(league).to receive(:tiebreakers).and_return(tiebreakers)
 
@@ -35,7 +35,7 @@ describe 'leagues/show' do
     assign(:ordered_rosters, ordered_rosters)
     assign(:divisions, divisions)
     assign(:roster, roster)
-    assign(:matches, divisions.map { |div| [div, matches] }.to_h)
+    assign(:matches, divisions.index_with { |_div| matches })
   end
 
   context 'hidden league' do

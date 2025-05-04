@@ -60,7 +60,7 @@ describe League do
     league = build(:league, schedule: :weeklies)
     expect(league).to be_invalid
     league = build(:league, schedule: :weeklies)
-    league.weekly_scheduler = build(:league_schedulers_weekly, league: league)
+    league.weekly_scheduler = build(:league_schedulers_weekly, league:)
     expect(league).to be_valid
   end
 
@@ -74,7 +74,7 @@ describe League do
 
     it 'returns pooled maps' do
       league = create(:league)
-      pooled_map = create(:league_pooled_map, league: league)
+      pooled_map = create(:league_pooled_map, league:)
 
       expect(league.map_pool).to eq([pooled_map.map])
     end

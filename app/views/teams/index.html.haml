@@ -16,6 +16,6 @@
   %ul.list-group.mt-2
     - @teams.each do |team|
       %li.list-group-item
-        = render 'teams/listing', team: team
+        = render('teams/listing', team:)
 
 = bootstrap_paginate @teams, list_classes: ['pagination justify-content-center mt-4']

@@ -3,7 +3,7 @@
     %b Information
   .card-body
     = bootstrap_form_for @format, as: :format_, url: meta_format_path(@format) do |f|
-      = render 'format_form', f: f
+      = render('format_form', f:)
 
       .d-flex.justify-content-end
         = link_to 'Cancel', meta_format_path(@format), class: 'btn btn-link mr-2'

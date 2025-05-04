@@ -11,7 +11,7 @@ class APIKey < ApplicationRecord
     loop do
       self.key = SecureRandom.hex(32)
 
-      break unless APIKey.exists?(key: key)
+      break unless APIKey.exists?(key:)
     end
   end
 end

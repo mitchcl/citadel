@@ -20,8 +20,8 @@ class League
       scope :ordered, -> { order(:created_at) }
 
       def create_edit!(user)
-        CommEdit.create!(created_by: user, comm: self, content: content,
-                         content_render_cache: content_render_cache)
+        CommEdit.create!(created_by: user, comm: self, content:,
+                         content_render_cache:)
       end
 
       paths do

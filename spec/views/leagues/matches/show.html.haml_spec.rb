@@ -4,21 +4,21 @@ describe 'leagues/matches/show' do
   let(:user) { build_stubbed(:user) }
   let(:map) { build_stubbed(:map) }
   let(:league) { build_stubbed(:league) }
-  let(:division) { build(:league_division, league: league) }
-  let(:home_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
-  let(:away_team) { build_stubbed(:league_roster, player_count: 3, division: division) }
-  let(:match) { build_stubbed(:league_match, home_team: home_team, away_team: away_team, notice: 'Foo') }
+  let(:division) { build(:league_division, league:) }
+  let(:home_team) { build_stubbed(:league_roster, player_count: 3, division:) }
+  let(:away_team) { build_stubbed(:league_roster, player_count: 3, division:) }
+  let(:match) { build_stubbed(:league_match, home_team:, away_team:, notice: 'Foo') }
   let(:round1) do
     build_stubbed(:league_match_round, home_team_score: 3, away_team_score: 2,
-                                       match: match, map: map)
+                                       match:, map:)
   end
   let(:round2) do
     build_stubbed(:league_match_round, home_team_score: 2, away_team_score: 3,
-                                       match: match, map: map)
+                                       match:, map:)
   end
   let(:round3) do
     build_stubbed(:league_match_round, home_team_score: 1, away_team_score: 1,
-                                       match: match, map: map)
+                                       match:, map:)
   end
   let(:rounds) { [round1, round2, round3] }
   let(:comms) do
@@ -31,7 +31,7 @@ describe 'leagues/matches/show' do
     assign(:match, match)
     assign(:pick_bans, [])
     assign(:rounds, rounds)
-    assign(:comm, League::Match::Comm.new(match: match))
+    assign(:comm, League::Match::Comm.new(match:))
     assign(:comms, comms)
 
     (home_team.users + away_team.users + comms.map(&:created_by)).each do |user|
@@ -176,7 +176,7 @@ describe 'leagues/matches/show' do
   context 'with schedule' do
     before do
       days = Array.new(5, true) + Array.new(2, false)
-      scheduler = build(:league_schedulers_weekly, days: days, minimum_selected: 3)
+      scheduler = build(:league_schedulers_weekly, days:, minimum_selected: 3)
       allow(league).to receive(:weekly_scheduler).and_return(scheduler)
       league.schedule = 'weeklies'
 
@@ -201,11 +201,11 @@ describe 'leagues/matches/show' do
   context 'with pending pick bans' do
     let(:pick_bans) do
       [
-        build_stubbed(:league_match_pick_ban, match: match, deferrable: true),
-        build_stubbed(:league_match_pick_ban, match: match, team: :away_team, kind: :ban),
-        build_stubbed(:league_match_pick_ban, match: match, team: :home_team, kind: :ban),
-        build_stubbed(:league_match_pick_ban, match: match, team: :away_team, kind: :pick),
-        build_stubbed(:league_match_pick_ban, match: match, team: :home_team, kind: :pick),
+        build_stubbed(:league_match_pick_ban, match:, deferrable: true),
+        build_stubbed(:league_match_pick_ban, match:, team: :away_team, kind: :ban),
+        build_stubbed(:league_match_pick_ban, match:, team: :home_team, kind: :ban),
+        build_stubbed(:league_match_pick_ban, match:, team: :away_team, kind: :pick),
+        build_stubbed(:league_match_pick_ban, match:, team: :home_team, kind: :pick),
       ]
     end
     let(:map_pool) { build_stubbed_list(:map, 3) }
@@ -225,11 +225,11 @@ describe 'leagues/matches/show' do
     let(:user) { build_stubbed(:user) }
     let(:pick_bans) do
       [
-        build_stubbed(:league_match_pick_ban, match: match, picked_by: user, team: :home_team, kind: :deferred),
-        build_stubbed(:league_match_pick_ban, match: match, map: map, picked_by: user, team: :away_team, kind: :ban),
-        build_stubbed(:league_match_pick_ban, match: match, map: map, picked_by: user, team: :home_team, kind: :ban),
-        build_stubbed(:league_match_pick_ban, match: match, map: map, picked_by: user, team: :away_team, kind: :pick),
-        build_stubbed(:league_match_pick_ban, match: match, map: map, picked_by: user, team: :home_team, kind: :pick),
+        build_stubbed(:league_match_pick_ban, match:, picked_by: user, team: :home_team, kind: :deferred),
+        build_stubbed(:league_match_pick_ban, match:, map:, picked_by: user, team: :away_team, kind: :ban),
+        build_stubbed(:league_match_pick_ban, match:, map:, picked_by: user, team: :home_team, kind: :ban),
+        build_stubbed(:league_match_pick_ban, match:, map:, picked_by: user, team: :away_team, kind: :pick),
+        build_stubbed(:league_match_pick_ban, match:, map:, picked_by: user, team: :home_team, kind: :pick),
       ]
     end
     let(:map_pool) { build_stubbed_list(:map, 3) }

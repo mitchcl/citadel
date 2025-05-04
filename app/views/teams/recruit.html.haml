@@ -11,7 +11,7 @@
   %table.table.mt-2
     - @users.each do |user|
       %tr
-        %td= render 'users/listing', user: user
+        %td= render('users/listing', user:)
         %td
           = button_to invite_team_path(@team, user_id: user.id),
                       method: :patch, class: 'btn btn-success pull-right',

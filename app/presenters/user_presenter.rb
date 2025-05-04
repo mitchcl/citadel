@@ -78,7 +78,7 @@ class UserPresenter < BasePresenter
   end
 
   def transfer_status(league)
-    request = league.transfer_requests.pending.find_by(user: user)
+    request = league.transfer_requests.pending.find_by(user:)
 
     if request
       present(request).transfer_message

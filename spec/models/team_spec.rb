@@ -46,7 +46,7 @@ describe Team do
     let(:team) { create(:team) }
 
     it "can't be destroyed when the team has roster" do
-      create(:league_roster, team: team)
+      create(:league_roster, team:)
 
       expect(team.destroy).to eq(false)
     end

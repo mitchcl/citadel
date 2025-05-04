@@ -62,7 +62,7 @@
         - else
           No upcoming matches for #{@divisions.first.name}
     - else
-      = render 'leagues/matches/matches_table', matches: matches, roster: nil
+      = render 'leagues/matches/matches_table', matches:, roster: nil
 - else
   = link_to league_matches_path(@league), class: 'btn btn-info mb-3' do
     All Matches
@@ -121,7 +121,7 @@
     / Render brackets
     - matches = @matches[div]
     - if matches.present?
-      = render 'leagues/divisions/bracket', division: div, rosters: rosters, matches: matches
+      = render('leagues/divisions/bracket', division: div, rosters:, matches:)
 
     - if i != @ordered_rosters.size - 1
       %hr.mb-5

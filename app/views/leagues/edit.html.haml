@@ -5,9 +5,8 @@
 .row.no-gutters.align-items-start
   .col-auto.mr-2
     %h1
-      Editing 
+      Editing
       = league_p.link
-
 
 .alert.alert-warning
   - if @league.hidden?
@@ -23,12 +22,11 @@
 
 .mb-5
   = bootstrap_form_for @league, url: league_path(@league) do |f|
-    = render 'league_form', f: f, weekly_scheduler: @weekly_scheduler
+    = render 'league_form', f:, weekly_scheduler: @weekly_scheduler
 
     .d-flex.justify-content-end
       = link_to 'Cancel', league_path(@league), class: 'btn btn-link mr-2'
       = f.primary 'Update'
-
 
 - if user_can_edit_leagues?
   .alert.alert-danger.mb-3
@@ -51,4 +49,3 @@
       - else
         = button_to 'Unmark Completed', modify_league_path(@league, status: 'running'),
                     method: :patch, class: 'btn btn-warning'
-

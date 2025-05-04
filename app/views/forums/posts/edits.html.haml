@@ -12,6 +12,6 @@
       = present(@thread).link
 
 - @edits.each do |post_edit|
-  = render 'post_edit', post_edit: post_edit, class: 'mb-3'
+  = render 'post_edit', post_edit:, class: 'mb-3'
 
 = bootstrap_paginate @edits, list_classes: ['pagination justify-content-center mt-4']

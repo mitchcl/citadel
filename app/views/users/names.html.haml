@@ -13,10 +13,10 @@
 
       %td
         = button_to handle_user_name_path(name_change.user, name_change, approve: true),
-                     method: :patch, class: 'btn btn-success' do
+                    method: :patch, class: 'btn btn-success' do
           Approve
 
       %td
         = button_to handle_user_name_path(name_change.user, name_change, approve: false),
-                     method: :patch, class: 'btn btn-danger' do
+                    method: :patch, class: 'btn btn-danger' do
           Deny

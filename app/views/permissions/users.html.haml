@@ -18,11 +18,11 @@
   %table.table.mt-2
     - @users_with_permission.each do |user|
       %tr
-        %td= render 'users/listing', user: user
+        %td= render('users/listing', user:)
         %td
           - url_params = url_params.merge(user_id: user.id)
           = button_to revoke_permissions_path(url_params), method: :delete,
-                                                           class: 'btn btn-danger pull-right' do
+                                                           class:  'btn btn-danger pull-right' do
             Revoke
 
   %hr
@@ -30,11 +30,11 @@
   %table.table.mt-2
     - @users_without_permission.each do |user|
       %tr
-        %td= render 'users/listing', user: user
+        %td= render('users/listing', user:)
         %td
           - url_params = url_params.merge(user_id: user.id)
           = button_to grant_permissions_path(url_params), method: :post,
-                                                          class: 'btn btn-success pull-right' do
+                                                          class:  'btn btn-success pull-right' do
             Grant
 
 = bootstrap_paginate @users_without_permission, list_classes: ['pagination justify-content-center mt-4']

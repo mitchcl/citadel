@@ -15,12 +15,11 @@
       .d-flex.flex-column
         %b.p-0
           %span.name= user_p.link
-          %span.titles= user_p.titles team: team
+          %span.titles= user_p.titles(team:)
 
         - if show_team_name && team.present?
           %small.team
             = present(team).link
-
 
       .p-0.steam-link.ml-auto
         - if show_steam_icon

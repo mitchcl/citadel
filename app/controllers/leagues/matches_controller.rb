@@ -23,7 +23,7 @@ module Leagues
                           .order(:id)
                           .merge(League::Match.ordered)
                           .references(:matches)
-      @matches = @divisions.map { |div| [div, div.matches] }.to_h
+      @matches = @divisions.index_with(&:matches)
     end
 
     def new

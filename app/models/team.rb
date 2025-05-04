@@ -39,27 +39,27 @@ class Team < ApplicationRecord
   end
 
   def invite(user)
-    invites.create(user: user)
+    invites.create(user:)
   end
 
   def invite_for(user)
-    invites.find_by(user: user)
+    invites.find_by(user:)
   end
 
   def invited?(user)
-    invites.exists?(user: user)
+    invites.exists?(user:)
   end
 
   def add_player!(user)
-    players.create!(user: user)
+    players.create!(user:)
   end
 
   def remove_player!(user)
-    players.find_by(user: user).destroy!
+    players.find_by(user:).destroy!
   end
 
   def on_roster?(user)
-    players.exists?(user: user)
+    players.exists?(user:)
   end
 
   def entered?(comp)

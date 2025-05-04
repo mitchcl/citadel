@@ -20,7 +20,7 @@ class PagesController < ApplicationController
 
     @topic = Forums::Topic.find(config['id'])
     @threads = @topic.threads.visible.ordered.limit(limit)
-    @news_posts = @threads.map { |thread| [thread, thread.original_post] }.to_h
+    @news_posts = @threads.index_with(&:original_post)
     @more_threads = @topic.threads.visible.limit(limit + 1).size > limit
   end
 end

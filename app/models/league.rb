@@ -76,11 +76,11 @@ class League < ApplicationRecord
   end)
 
   def entered?(user)
-    players.exists?(user: user)
+    players.exists?(user:)
   end
 
   def roster_for(user)
-    players.find_by(user: user)&.roster
+    players.find_by(user:)&.roster
   end
 
   def ordered_rosters_by_division

@@ -31,11 +31,11 @@
 
   .card
     .card-body
-      = bootstrap_form_for @roster, as: :roster,
-          url: league_rosters_path(@league, team_id: @team.id) do |f|
+      = bootstrap_form_for @roster, as:  :roster,
+                                    url: league_rosters_path(@league, team_id: @team.id) do |f|
         = f.text_field :name
         = f.select :division_id, divisions_select(@league), label: 'Desired Division'
-        = render 'form', f: f
+        = render('form', f:)
 
         = f.form_group :players, label: { text: 'Players' } do
           / Check box list for players from the team to add to the roster
@@ -54,8 +54,8 @@
 
               / Manually display errors.
               - if player && has_errors
-                - player.errors.each_value do |error|
-                  %span.help-block= error
+                - player.errors.full_messages.each do |msg|
+                  %span.help-block= msg
 
         .d-flex.justify-content-end
           = link_to 'Cancel', league_path(@league), class: 'btn btn-link mr-2'

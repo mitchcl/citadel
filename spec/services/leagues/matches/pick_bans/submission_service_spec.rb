@@ -11,7 +11,7 @@ describe Leagues::Matches::PickBans::SubmissionService do
   end
 
   it 'successfully submits a pick' do
-    pick = create(:league_match_pick_ban, match: match, kind: :pick)
+    pick = create(:league_match_pick_ban, match:, kind: :pick)
 
     expect(subject.call(pick, user, map)).to be_truthy
     expect(pick).to be_valid
@@ -20,7 +20,7 @@ describe Leagues::Matches::PickBans::SubmissionService do
   end
 
   it 'successfully submits a ban' do
-    ban = create(:league_match_pick_ban, match: match, kind: :ban)
+    ban = create(:league_match_pick_ban, match:, kind: :ban)
 
     expect(subject.call(ban, user, map)).to be_truthy
     expect(ban).to be_valid
@@ -29,7 +29,7 @@ describe Leagues::Matches::PickBans::SubmissionService do
   end
 
   it 'fails with invalid data' do
-    pick = create(:league_match_pick_ban, match: match, kind: :pick)
+    pick = create(:league_match_pick_ban, match:, kind: :pick)
 
     expect(subject.call(pick, nil, map)).to be_falsey
     expect(pick).to be_invalid

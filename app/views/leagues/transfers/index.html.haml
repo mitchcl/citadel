@@ -22,10 +22,9 @@
 
               .btn-toolbar.guttered.ml-auto
                 = button_to 'Approve', league_transfer_path(@league, request), method: :patch,
-                            class: 'btn btn-success'
+                                                                               class:  'btn btn-success'
                 = button_to 'Deny', league_transfer_path(@league, request), method: :delete,
-                            class: 'btn btn-danger'
-
+                                                                            class:  'btn btn-danger'
 
     - old_transfer_requests = @old_transfer_requests[division]
     - unless old_transfer_requests.empty?
@@ -35,7 +34,7 @@
           = inline_svg_tag 'open_iconic/timer.svg', class: 'icon'
           Transfer History
 
-      .collapse{ id: id }
+      .collapse{ id: }
         %ul.list-group.list-group-flush
           - old_transfer_requests.each do |request|
             %li.list-group-item

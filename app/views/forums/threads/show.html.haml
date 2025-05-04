@@ -12,8 +12,7 @@
 
     .col.d-none.d-md-block
 
-    - if user_signed_in?
-      = render 'forums/threads/subscribe_btn', thread: @thread
+    = render 'forums/threads/subscribe_btn', thread: @thread if user_signed_in?
 
   - @posts.each do |post|
     = render post, quote_id: 'wmd-input-new-forums-post'
@@ -22,7 +21,7 @@
 
   - if user_can_create_post?
     = bootstrap_form_for @post, url: forums_thread_posts_path(@thread, page: @page) do |f|
-      = render 'forums/posts/form', f: f
+      = render('forums/posts/form', f:)
 
       .d-flex.justify-content-end
         = f.submit 'Post', class: 'btn btn-primary'

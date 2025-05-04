@@ -86,7 +86,7 @@ class User < ApplicationRecord
     steam_id = SteamId.to_64(query)
     query = Search.transform_query(query)
 
-    where(steam_id: steam_id).or(where('(query_name_cache <-> ?) < 0.9', query))
+    where(steam_id:).or(where('(query_name_cache <-> ?) < 0.9', query))
       .order(sanitize_sql_for_order([Arel.sql('steam_id = ? DESC'), steam_id]))
       .order(sanitize_sql_for_order([Arel.sql('query_name_cache <-> ?'), query]))
   end)
@@ -122,7 +122,7 @@ class User < ApplicationRecord
   end
 
   def aka
-    names.approved.where.not(name: name)
+    names.approved.where.not(name:)
   end
 
   def confirm

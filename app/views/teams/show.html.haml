@@ -29,12 +29,12 @@
                                       aria: { controls: 'leagues', selected: 'false' } }
       Leagues
   %a.nav-item.nav-link#players-tab{ href: '#players', role: 'tab', data: { toggle: 'tab' },
-                                   aria: { controls: 'players', selected: 'false' } }
+                                    aria: { controls: 'players', selected: 'false' } }
     Players
 
 .tab-content.mt-3#tab-content
   .tab-pane.show.active#info{ role: 'tabpanel', aria: { kabekkedby: 'info-tab' } }
-    = render 'teams/show_info', team: @team, team_p: team_p,
+    = render 'teams/show_info', team: @team, team_p:,
                                 upcoming_matches: @upcoming_matches, active_rosters: @active_rosters
 
   - unless @active_rosters.empty? && @past_rosters.empty?

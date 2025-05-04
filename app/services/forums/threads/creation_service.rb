@@ -4,7 +4,7 @@ module Forums
       include BaseService
 
       def call(user, topic, params, post_params)
-        params = params.merge(created_by: user, topic: topic)
+        params = params.merge(created_by: user, topic:)
         thread = Thread.new(params)
 
         post_params[:created_by] = user
@@ -20,10 +20,10 @@ module Forums
       def save_thread(user, topic, thread)
         thread.transaction do
           thread.save || rollback!
-          user.forums_subscriptions.create!(thread: thread)
+          user.forums_subscriptions.create!(thread:)
 
           if topic
-            users = topic.subscriptions.where.not(user: user).map(&:user)
+            users = topic.subscriptions.where.not(user:).map(&:user)
             notify_users(users, topic, thread)
           end
         end
@@ -37,7 +37,7 @@ module Forums
           # TODO: Remove duplicate permission logic
           if !thread.hidden || (thread.not_isolated? && user.can?(:manage, :forums)) ||
              (thread.isolated? && user.can?(:manage, thread.isolated_by))
-            Users::NotificationService.call(user, message: message, link: url)
+            Users::NotificationService.call(user, message:, link: url)
           end
         end
       end
