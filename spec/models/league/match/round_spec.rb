@@ -18,7 +18,7 @@ describe League::Match::Round do
   it { should validate_numericality_of(:away_team_score).is_greater_than_or_equal_to(0) }
 
   def build_round(match, home_team_score, away_team_score)
-    build(:league_match_round, match: match, home_team_score: home_team_score, away_team_score: away_team_score,
+    build(:league_match_round, match:, home_team_score:, away_team_score:,
                                has_outcome: true)
   end
 

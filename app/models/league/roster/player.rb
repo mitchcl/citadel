@@ -10,11 +10,11 @@ class League
       validate :league_permissions, on: :create
 
       after_create do
-        roster.transfers.create(user: user, is_joining: true)
+        roster.transfers.create(user:, is_joining: true)
       end
 
       after_destroy do
-        roster.transfers.create(user: user, is_joining: false)
+        roster.transfers.create(user:, is_joining: false)
       end
 
       private
@@ -22,9 +22,7 @@ class League
       def unique_within_league
         return if user.blank? || roster.blank?
 
-        if league.players.where(user: user).where.not(id: id).exists?
-          errors.add(:base, 'Can only be in one roster per league')
-        end
+        errors.add(:base, 'Can only be in one roster per league') if league.players.where(user:).where.not(id:).exists?
       end
 
       def league_permissions

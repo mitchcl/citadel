@@ -13,7 +13,7 @@ describe Team::Player do
     team = create(:team)
     user = create(:user)
 
-    team.players.create!(user: user)
+    team.players.create!(user:)
 
     expect(team.transfers.size).to eq(1)
     transfer = team.transfers.first

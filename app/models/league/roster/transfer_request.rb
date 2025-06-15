@@ -82,11 +82,11 @@ class League
       end
 
       def self.leaving_roster(roster)
-        pending.where(roster: roster, is_joining: false).or(pending.where(leaving_roster: roster))
+        pending.where(roster:, is_joining: false).or(pending.where(leaving_roster: roster))
       end
 
       def self.joining_roster(roster)
-        pending.where(roster: roster, is_joining: true)
+        pending.where(roster:, is_joining: true)
       end
 
       private
@@ -127,7 +127,7 @@ class League
       def unique_within_league_check
         return unless user.present? && roster.present? && is_joining?
 
-        if league.transfer_requests.pending.where(user: user).where.not(id: id).exists?
+        if league.transfer_requests.pending.where(user:).where.not(id:).exists?
           errors.add(:user_id, 'Is already pending a transfer')
         end
       end
@@ -162,9 +162,9 @@ class League
         return unless user.present? && roster.present?
 
         if is_joining?
-          roster_size_limits_when_joining_check(tentative: tentative)
+          roster_size_limits_when_joining_check(tentative:)
         else
-          roster_size_limits_when_leaving_check(tentative: tentative)
+          roster_size_limits_when_leaving_check(tentative:)
         end
       end
 

@@ -8,8 +8,8 @@ describe API::V1::TeamsController, type: :request do
     let(:route) { '/api/v1/teams' }
 
     it 'succeeds for existing team' do
-      players = create_list(:team_player, 3, team: team)
-      rosters = create_list(:league_roster, 2, team: team)
+      players = create_list(:team_player, 3, team:)
+      rosters = create_list(:league_roster, 2, team:)
 
       captain = players[0].user
       captain.grant(:edit, team)

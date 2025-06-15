@@ -5,7 +5,7 @@ module Leagues
         include BaseService
 
         def call(creator, match, params)
-          comm_params = params.merge(created_by: creator, match: match)
+          comm_params = params.merge(created_by: creator, match:)
           comm = League::Match::Comm.new(comm_params)
 
           comm.transaction do
@@ -33,7 +33,7 @@ module Leagues
           User.which_can(:edit, roster.team).each do |captain|
             next if captain == user
 
-            Users::NotificationService.call(captain, message: message, link: link)
+            Users::NotificationService.call(captain, message:, link:)
           end
         end
       end

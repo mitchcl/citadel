@@ -19,7 +19,6 @@
         %a.nav-link{ class: klass, data: { toggle: 'tab' }, href: "##{game.name.parameterize}" }
           = game.name
 
-
 .games.tab-content
   - @games.each_with_index do |game, index|
     - klass = "tab-pane fade #{index.zero? ? 'show active' : ''} "
@@ -30,4 +29,4 @@
         .container.text-muted.p-3
           No leagues found
       - else
-        = render 'league_list', leagues: leagues, game: game
+        = render('league_list', leagues:, game:)

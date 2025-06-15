@@ -5,7 +5,7 @@ describe Leagues::Rosters::TransfersController do
   let(:player) { create(:user) }
   let(:bencher) { create(:user) }
   let!(:team) { create(:team) }
-  let!(:roster) { create(:league_roster, team: team) }
+  let!(:roster) { create(:league_roster, team:) }
 
   before do
     team.add_player!(bencher)
@@ -126,7 +126,7 @@ describe Leagues::Rosters::TransfersController do
   describe 'DELETE #destroy' do
     context 'transfer out' do
       let(:transfer_request) do
-        create(:league_roster_transfer_request, roster: roster, user: player, is_joining: false)
+        create(:league_roster_transfer_request, roster:, user: player, is_joining: false)
       end
 
       it 'succeeds for authorized captain' do
@@ -163,7 +163,7 @@ describe Leagues::Rosters::TransfersController do
     end
 
     context 'transfer in' do
-      let(:transfer_request) { create(:league_roster_transfer_request, roster: roster, user: bencher) }
+      let(:transfer_request) { create(:league_roster_transfer_request, roster:, user: bencher) }
 
       it 'succeeds for authorized captain' do
         user.grant(:edit, team)

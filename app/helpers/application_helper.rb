@@ -15,7 +15,7 @@ module ApplicationHelper
       controller.is_a? AdminController
     else
       controller_path.start_with?(name.to_s) ||
-        controller_name == 'pages' && action_name == name.to_s
+        (controller_name == 'pages' && action_name == name.to_s)
     end
   end
 

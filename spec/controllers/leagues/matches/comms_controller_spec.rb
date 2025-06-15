@@ -12,7 +12,7 @@ describe Leagues::Matches::CommsController do
       sign_in user
 
       post :create, params: {
-        league_id: league.id, match_id: match.id, comm: { content: content }
+        league_id: league.id, match_id: match.id, comm: { content: }
       }
 
       comm = match.comms.first
@@ -40,7 +40,7 @@ describe Leagues::Matches::CommsController do
       sign_in user
 
       post :create, params: {
-        league_id: league.id, match_id: match.id, comm: { content: content }
+        league_id: league.id, match_id: match.id, comm: { content: }
       }
 
       expect(match.comms).to be_empty
@@ -53,7 +53,7 @@ describe Leagues::Matches::CommsController do
       sign_in user
 
       post :create, params: {
-        league_id: league.id, match_id: match.id, comm: { content: content }
+        league_id: league.id, match_id: match.id, comm: { content: }
       }
 
       expect(match.comms).to be_empty
@@ -64,7 +64,7 @@ describe Leagues::Matches::CommsController do
       sign_in user
 
       post :create, params: {
-        league_id: league.id, match_id: match.id, comm: { content: content }
+        league_id: league.id, match_id: match.id, comm: { content: }
       }
 
       expect(match.comms).to be_empty
@@ -73,7 +73,7 @@ describe Leagues::Matches::CommsController do
 
     it 'redirects for unauthenticated user' do
       post :create, params: {
-        league_id: league.id, match_id: match.id, comm: { content: content }
+        league_id: league.id, match_id: match.id, comm: { content: }
       }
 
       expect(match.comms).to be_empty
@@ -83,7 +83,7 @@ describe Leagues::Matches::CommsController do
 
   context 'existing comm' do
     let(:writer) { create(:user) }
-    let(:comm) { create(:league_match_comm, match: match, created_by: writer) }
+    let(:comm) { create(:league_match_comm, match:, created_by: writer) }
 
     describe 'GET #edit' do
       it 'succeeds for authorized user' do
@@ -118,7 +118,7 @@ describe Leagues::Matches::CommsController do
         user.grant(:edit, league)
         sign_in user
 
-        patch :update, params: { id: comm.id, comm: { content: content } }
+        patch :update, params: { id: comm.id, comm: { content: } }
 
         comm.reload
         expect(comm.content).to eq(content)
@@ -131,7 +131,7 @@ describe Leagues::Matches::CommsController do
       it 'succeeds for writer' do
         sign_in writer
 
-        patch :update, params: { id: comm.id, comm: { content: content } }
+        patch :update, params: { id: comm.id, comm: { content: } }
 
         expect(comm.reload.content).to eq(content)
         expect(response).to redirect_to(comm.paths.show)
@@ -150,7 +150,7 @@ describe Leagues::Matches::CommsController do
         user.grant(:edit, match.home_team.team)
         sign_in user
 
-        patch :update, params: { id: comm.id, comm: { content: content } }
+        patch :update, params: { id: comm.id, comm: { content: } }
 
         expect(comm.reload.content).to_not eq(content)
         expect(response).to redirect_to(comm.paths.show)
@@ -160,7 +160,7 @@ describe Leagues::Matches::CommsController do
         writer.ban(:use, :leagues)
         sign_in writer
 
-        patch :update, params: { id: comm.id, comm: { content: content } }
+        patch :update, params: { id: comm.id, comm: { content: } }
 
         expect(comm.reload.content).to_not eq(content)
         expect(response).to redirect_to(comm.paths.show)
@@ -170,7 +170,7 @@ describe Leagues::Matches::CommsController do
         writer.ban(:use, :teams)
         sign_in writer
 
-        patch :update, params: { id: comm.id, comm: { content: content } }
+        patch :update, params: { id: comm.id, comm: { content: } }
 
         expect(comm.reload.content).to_not eq(content)
         expect(response).to redirect_to(comm.paths.show)
@@ -179,14 +179,14 @@ describe Leagues::Matches::CommsController do
       it 'redirects for any user' do
         sign_in user
 
-        patch :update, params: { id: comm.id, comm: { content: content } }
+        patch :update, params: { id: comm.id, comm: { content: } }
 
         expect(comm.reload.content).to_not eq(content)
         expect(response).to redirect_to(comm.paths.show)
       end
 
       it 'redirects for unauthenticated user' do
-        patch :update, params: { id: comm.id, comm: { content: content } }
+        patch :update, params: { id: comm.id, comm: { content: } }
 
         expect(comm.reload.content).to_not eq(content)
         expect(response).to redirect_to(comm.paths.show)
@@ -194,7 +194,7 @@ describe Leagues::Matches::CommsController do
     end
 
     describe 'GET #edits' do
-      let!(:edits) { create_list(:league_match_comm_edit, 3, comm: comm, created_by: writer) }
+      let!(:edits) { create_list(:league_match_comm_edit, 3, comm:, created_by: writer) }
 
       it 'succeeds for authorized user' do
         user.grant(:edit, league)
@@ -285,14 +285,14 @@ describe Leagues::Matches::CommsController do
 
   context 'deleted comm' do
     let(:writer) { create(:user) }
-    let(:comm) { create(:league_match_comm, match: match, created_by: writer, deleted_by: writer) }
+    let(:comm) { create(:league_match_comm, match:, created_by: writer, deleted_by: writer) }
 
     describe '#update' do
       it 'redirects for authorized admin' do
         user.grant(:edit, league)
         sign_in user
 
-        patch :update, params: { id: comm.id, comm: { content: content } }
+        patch :update, params: { id: comm.id, comm: { content: } }
 
         comm.reload
         expect(comm.exists?).to be false

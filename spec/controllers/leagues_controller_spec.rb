@@ -167,7 +167,7 @@ describe LeaguesController do
   describe 'PATCH #update' do
     let(:format) { create(:format) }
     let(:format2) { create(:format) }
-    let(:comp) { create(:league, format: format) }
+    let(:comp) { create(:league, format:) }
 
     it 'succeeds for authorized user' do
       sign_in admin

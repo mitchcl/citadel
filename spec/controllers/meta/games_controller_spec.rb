@@ -112,8 +112,8 @@ describe Meta::GamesController do
 
     describe 'DELETE #destroy' do
       before do
-        create(:map, game: game)
-        create(:format, game: game)
+        create(:map, game:)
+        create(:format, game:)
       end
 
       it 'succeeds for authorized user' do

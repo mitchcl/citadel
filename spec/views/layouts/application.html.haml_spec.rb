@@ -17,7 +17,7 @@ describe 'layouts/application' do
       allow(user).to receive(:teams).and_return(build_stubbed_list(:team, 2))
       allow(view).to receive(:current_user).and_return(user)
       allow(view).to receive(:user_signed_in?).and_return(true)
-      assign(:notifications, build_stubbed_list(:user_notification, 10, user: user))
+      assign(:notifications, build_stubbed_list(:user_notification, 10, user:))
     end
 
     it 'displays username' do

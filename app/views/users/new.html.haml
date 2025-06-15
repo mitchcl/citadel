@@ -6,12 +6,15 @@
 
 .card.mb-3
   .card-header
-    %b= link_to "Create account with your Steam account", 'https://steamcommunity.com/profiles/' + @user.steam_id.to_s, class: 'steam_link'
-  
+    %b
+      = link_to 'Create account with your Steam account',
+                'https://steamcommunity.com/profiles/' + @user.steam_id.to_s,
+                class: 'steam_link'
+
   .card-body
     = bootstrap_form_for @user, method: :new do |f|
       = f.text_field :name
-      = render 'form', f: f, user: @user, user_p: user_p
+      = render('form', f:, user: @user, user_p:)
 
       .d-flex.justify-content-end
         = link_to 'Cancel', :back, class: 'btn btn-link mr-2'

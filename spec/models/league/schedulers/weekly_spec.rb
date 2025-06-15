@@ -20,9 +20,9 @@ describe League::Schedulers::Weekly do
 
   it 'validates minimum' do
     days = Array.new(5, true) + Array.new(2, false)
-    expect(build(:league_schedulers_weekly, days: days, minimum_selected: 0)).to be_valid
-    expect(build(:league_schedulers_weekly, days: days, minimum_selected: 5)).to be_valid
-    expect(build(:league_schedulers_weekly, days: days, minimum_selected: 6)).to be_invalid
-    expect(build(:league_schedulers_weekly, days: days, minimum_selected: 7)).to be_invalid
+    expect(build(:league_schedulers_weekly, days:, minimum_selected: 0)).to be_valid
+    expect(build(:league_schedulers_weekly, days:, minimum_selected: 5)).to be_valid
+    expect(build(:league_schedulers_weekly, days:, minimum_selected: 6)).to be_invalid
+    expect(build(:league_schedulers_weekly, days:, minimum_selected: 7)).to be_invalid
   end
 end

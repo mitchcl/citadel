@@ -17,7 +17,6 @@
             %h6.m-0
               = div.name
 
-
   .tab-content
     - @league.divisions.each do |div|
       - klass = div == @division ? 'active' : ''
@@ -27,7 +26,7 @@
           = hidden_field_tag :division_id, div.id
 
           = f.errors_on :base
-          = render 'match_form', f: f, div: div
+          = render('match_form', f:, div:)
 
           .d-flex.justify-content-end
             = link_to 'Cancel', league_matches_path(@league), class: 'btn btn-link mr-2'

@@ -5,15 +5,15 @@ describe Leagues::Matches::GenerationService do
     it 'works' do
       division = create(:league_division)
 
-      team1 = create(:league_roster, division: division, seeding: 3)
-      team2 = create(:league_roster, division: division, seeding: 2)
-      team3 = create(:league_roster, division: division, seeding: 1)
-      team4 = create(:league_roster, division: division, seeding: 4)
+      team1 = create(:league_roster, division:, seeding: 3)
+      team2 = create(:league_roster, division:, seeding: 2)
+      team3 = create(:league_roster, division:, seeding: 1)
+      team4 = create(:league_roster, division:, seeding: 4)
 
       map = create(:map)
       match_options = {
         round_number: 1, rounds_attributes: [
-          { map: map },
+          { map: },
         ]
       }
       match = described_class.call(division, match_options, :single_elimination, {})
@@ -55,7 +55,7 @@ describe Leagues::Matches::GenerationService do
       map = create(:map)
       match_options = {
         round_number: 2, rounds_attributes: [
-          { map: map },
+          { map: },
         ]
       }
       match = described_class.call(division, match_options, :single_elimination, round: 1)

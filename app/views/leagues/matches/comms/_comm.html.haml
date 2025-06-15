@@ -16,8 +16,7 @@
         .dropdown-menu.dropdown-menu-right
           = link_to 'Link', comm.paths.show, class: 'dropdown-item'
 
-          - if user_can_edit_comm?(comm)
-            = link_to 'Edit', comm.paths.edit, class: 'dropdown-item'
+          = link_to 'Edit', comm.paths.edit, class: 'dropdown-item' if user_can_edit_comm?(comm)
 
           = link_to 'History', comm.paths.edits, class: 'dropdown-item'
 

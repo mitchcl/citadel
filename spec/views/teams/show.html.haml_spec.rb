@@ -4,16 +4,16 @@ describe 'teams/show' do
   let(:team) { build_stubbed(:team) }
   let(:invite) { build_stubbed(:team_invite) }
   let(:players) { build_stubbed_list(:team_player, 6) }
-  let(:transfers_in) { build_stubbed_list(:team_transfer, 5, team: team, is_joining: true) }
-  let(:transfers_out) { build_stubbed_list(:team_transfer, 5, team: team, is_joining: false) }
+  let(:transfers_in) { build_stubbed_list(:team_transfer, 5, team:, is_joining: true) }
+  let(:transfers_out) { build_stubbed_list(:team_transfer, 5, team:, is_joining: false) }
   let(:active_league) { build_stubbed(:league) }
   let(:signup_league) { build_stubbed(:league, signuppable: true) }
   let(:completed_league) { build_stubbed(:league, status: :completed) }
 
   before do
     @active_rosters = [active_league, signup_league].map do |league|
-      division = build_stubbed(:league_division, league: league)
-      build_stubbed(:league_roster, division: division)
+      division = build_stubbed(:league_division, league:)
+      build_stubbed(:league_roster, division:)
     end
     @active_rosters << build_stubbed(:league_roster, disbanded: true)
 
@@ -36,11 +36,11 @@ describe 'teams/show' do
 
     match = @matches.first
     rounds = []
-    rounds << build_stubbed(:league_match_round, match: match, home_team_score: 2,
+    rounds << build_stubbed(:league_match_round, match:, home_team_score: 2,
                                                  away_team_score: 1)
-    rounds << build_stubbed(:league_match_round, match: match, home_team_score: 1,
+    rounds << build_stubbed(:league_match_round, match:, home_team_score: 1,
                                                  away_team_score: 2)
-    rounds << build_stubbed(:league_match_round, match: match, home_team_score: 3,
+    rounds << build_stubbed(:league_match_round, match:, home_team_score: 3,
                                                  away_team_score: 3)
     @matches.each do |match_|
       allow(match_).to receive(:rounds).and_return(rounds)

@@ -24,7 +24,7 @@ describe 'pages/home' do
       assign(:topic, build_stubbed(:forums_topic))
       threads = build_stubbed_list(:forums_thread, 3)
       assign(:threads, threads)
-      assign(:news_posts, threads.map { |thread| [thread, build_stubbed(:forums_post)] }.to_h)
+      assign(:news_posts, threads.index_with { |_thread| build_stubbed(:forums_post) })
       assign(:more_threads, true)
     end
 

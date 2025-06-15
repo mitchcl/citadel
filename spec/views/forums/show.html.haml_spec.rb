@@ -6,7 +6,7 @@ describe 'forums/show' do
 
   it 'displays' do
     threads.each do |thread|
-      allow(thread).to receive(:latest_post) { build_stubbed(:forums_post, thread: thread) }
+      allow(thread).to receive(:latest_post) { build_stubbed(:forums_post, thread:) }
     end
 
     allow(view).to receive(:user_can_manage_thread?).and_return(true)

@@ -5,14 +5,14 @@ module Forums
 
       def call(user, thread, params)
         params[:created_by] = user
-        post_params = params.merge(thread: thread)
+        post_params = params.merge(thread:)
         post = Post.new(post_params)
 
         post.transaction do
           post.save || rollback!
           post.create_edit!(user)
 
-          users = thread.subscriptions.where.not(user: user).map(&:user)
+          users = thread.subscriptions.where.not(user:).map(&:user)
           notify_users(users, thread, post)
         end
 
@@ -26,7 +26,7 @@ module Forums
         url = forums_thread_path(thread, page: Post.page_of(post), anchor: "post_#{post.id}")
 
         users.each do |user|
-          Users::NotificationService.call(user, message: message, link: url)
+          Users::NotificationService.call(user, message:, link: url)
         end
       end
     end

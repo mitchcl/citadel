@@ -1,11 +1,13 @@
-- cls = 'notification'
-- if notification.read
-  - cls += ' read'
+:ruby
+  cls = 'notification'
+  cls += ' read' if notification.read
 
-- notification_p = present(notification)
+  notification_p = present(notification)
 
-%li.list-group-item.d-flex.flex-column.p-2.webkit-min-height-fit-content{ class: cls,
-                                                                          id: "notification_#{notification.id}" }
+%li.list-group-item.d-flex.flex-column.p-2.webkit-min-height-fit-content{
+  class: cls,
+  id:    "notification_#{notification.id}"
+}
 
   .row.no-gutters
     .col.pl-2

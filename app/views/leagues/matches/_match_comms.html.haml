@@ -5,14 +5,14 @@
   .card-body.p-0
     - comms.each do |comm|
       - if comm.exists?
-        = render 'leagues/matches/comms/comm', match: match, comm: comm
+        = render('leagues/matches/comms/comm', match:, comm:)
       - elsif user_can_edit_league?
-        = render 'leagues/matches/comms/comm_deleted', match: match, comm: comm
+        = render('leagues/matches/comms/comm_deleted', match:, comm:)
 
   - if user_can_comm?
     .p-3
       = bootstrap_form_for comm, as: :comm, url: match_comms_path(match) do |f|
-        = render 'leagues/matches/comms/form', f: f
+        = render('leagues/matches/comms/form', f:)
 
         .d-flex.justify-content-end
           = f.primary 'Post'

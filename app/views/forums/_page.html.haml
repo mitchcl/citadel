@@ -15,15 +15,13 @@
 
   .spacer.d-none.d-md-block
 
-  - if user_signed_in?
-    = render 'forums/topics/subscribe_btn', topic: parent_topic
-
+  = render 'forums/topics/subscribe_btn', topic: parent_topic if user_signed_in?
 
 - unless topics.empty?
   %ul.list-group.mb-3
     - topics.each do |topic|
       %li.list-group-item.bg-light
-        = render 'forums/topics/listing', topic: topic
+        = render('forums/topics/listing', topic:)
 
 - unless topic.description.empty?
   .markdown.mb-3= present(topic).description
@@ -34,7 +32,6 @@
   %ul.list-group.mb-3
     - threads.each do |thread|
       %li.list-group-item{ class: present(thread).status_classes }
-        = render 'forums/threads/listing', thread: thread
-
+        = render('forums/threads/listing', thread:)
 
 = bootstrap_paginate threads, list_classes: ['pagination justify-content-center mt-4']

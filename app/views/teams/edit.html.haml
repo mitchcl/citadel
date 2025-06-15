@@ -8,7 +8,7 @@
     %b Team Info
   .card-body
     = bootstrap_form_for @team, method: :patch do |f|
-      = render 'team_form', f: f
+      = render('team_form', f:)
 
       .d-flex.justify-content-end
         = link_to users_permissions_path(action_: :edit, subject: :team, target: @team.id),

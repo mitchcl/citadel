@@ -21,6 +21,9 @@ Layout/LineLength:
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
+Layout/SpaceInsideParens:
+  Exclude:
+    - 'app/views/**/*'
 Metrics/AbcSize:
   Max: 30
 Metrics/ClassLength:
@@ -57,6 +60,9 @@ Style/MixinUsage:
   Exclude:
     - 'bin/setup'
     - 'bin/update'
+Style/IfUnlessModifier:
+  Exclude:
+    - 'app/views/**/*'
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
 
@@ -94,13 +100,17 @@ Rails/HttpPositionalArguments:
   Exclude:
     - 'spec/requests/api/v1/**/*'
 
+# Currently broken; lots of false positives
+Style/AccessModifierDeclarations:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'db/**/*'
     - 'config/**/*'
     - 'vendor/**/*'
   DisplayCopNames: true
-  TargetRubyVersion: 2.5
-  TargetRailsVersion: 5.2
+  TargetRubyVersion: 3.1
+  TargetRailsVersion: 7.1
   # Enable new cops by default
   NewCops: enable

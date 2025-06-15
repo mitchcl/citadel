@@ -8,7 +8,7 @@
       / TODO: Support object grants
       - next if @grants[action][subject].subject?
 
-      - if current_user.can?(action, subject) || current_user.can?(:edit, :permissions)
-        %li.list-group-item
-          = link_to users_permissions_path(action_: action.to_s, subject: subject.to_s) do
-            Permission to #{action.to_s.humanize} #{subject.to_s.humanize}
+      - next unless current_user.can?(action, subject) || current_user.can?(:edit, :permissions)
+      %li.list-group-item
+        = link_to users_permissions_path(action_: action.to_s, subject: subject.to_s) do
+          Permission to #{action.to_s.humanize} #{subject.to_s.humanize}

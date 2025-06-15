@@ -32,8 +32,12 @@
     .dropdown-header
       Behaviour
 
-    %li= link_to('Community Guidelines', 'https://docs.ozfortress.com/rules/community_guidelines', class: 'dropdown-item')
-    %li= link_to('Player Behaviour Infractions', 'https://docs.ozfortress.com/rules/infractions', class: 'dropdown-item')
+    %li
+      = link_to('Community Guidelines', 'https://docs.ozfortress.com/rules/community_guidelines',
+                class: 'dropdown-item')
+    %li
+      = link_to('Player Behaviour Infractions', 'https://docs.ozfortress.com/rules/infractions',
+                class: 'dropdown-item')
     %li= link_to('League Penalties', 'https://docs.ozfortress.com/rules/penalties', class: 'dropdown-item')
 
     :javascript
@@ -70,8 +74,12 @@
     .dropdown-header
       Other
 
-    %li= link_to('Verify Rosters tool', 'https://verify.ozfortress.com', target: :_blank, rel: :noopener, class: 'dropdown-item')
-    %li= link_to('Support & Reporting', 'https://docs.ozfortress.com/support/landing/', target: :_blank, rel: :noopener, class: 'dropdown-item')
+    %li
+      = link_to('Verify Rosters tool', 'https://verify.ozfortress.com',
+                target: :_blank, rel: :noopener, class: 'dropdown-item')
+    %li
+      = link_to('Support & Reporting', 'https://docs.ozfortress.com/support/landing/',
+                target: :_blank, rel: :noopener, class: 'dropdown-item')
 
     :javascript
       // Prevent inside clicks from dismissing dropdown
@@ -88,4 +96,3 @@
 - if user_signed_in? && current_user.admin?
   %li.nav-item{ class: navbar_class(:admin) }
     = link_to('Admin', :admin, class: 'nav-link')
-

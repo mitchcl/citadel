@@ -8,7 +8,7 @@ describe API::V1::MatchesController, type: :request do
     let(:route) { '/api/v1/matches' }
 
     it 'succeeds for existing match' do
-      create_list(:league_match_round, 3, match: match, home_team_score: 12)
+      create_list(:league_match_round, 3, match:, home_team_score: 12)
 
       get "#{route}/#{match.id}", headers: { 'X-API-Key' => api_key.key }
 

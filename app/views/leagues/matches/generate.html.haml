@@ -20,7 +20,7 @@
         .form-group
           %label.control-label Tournament System
           = select_tag 'tournament_system', tournament_system_select, class: 'form-control',
-                                            data: { toggle: 'tab' }
+                                                                      data:  { toggle: 'tab' }
 
         .tab-content
           - tournament_systems.each do |system|
@@ -28,9 +28,9 @@
             .tab-pane{ id: system, class: klass }
               - data_name = :"#{system}_tournament"
               - value = instance_variable_get("@#{data_name}")
-              = render "leagues/matches/tournament_systems/#{system}_form", f: f, data_name => value
+              = render "leagues/matches/tournament_systems/#{system}_form", f:, data_name => value
 
-    = render 'match_form', f: f, div: @division, no_team_fields: true
+    = render 'match_form', f:, div: @division, no_team_fields: true
 
     .d-flex.justify-content-end
       = link_to 'Cancel', league_matches_path(@league), class: 'btn btn-link mr-2'

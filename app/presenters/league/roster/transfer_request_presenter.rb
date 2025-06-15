@@ -103,7 +103,7 @@ class League
           {}
         end.merge(
           created_by: created_by.link, user: user_param, direction: direction_message,
-          roster: roster.link, leaving_message: leaving_message
+          roster: roster.link, leaving_message:
         )
       end
     end

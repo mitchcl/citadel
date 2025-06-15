@@ -3,7 +3,7 @@ module API
     class APIController < ActionController::API
       def api_key
         key = request.headers['X-Api-Key']
-        @api_key ||= APIKey.find_by(key: key)
+        @api_key ||= APIKey.find_by(key:)
       end
 
       before_action :authenticate
@@ -37,7 +37,7 @@ module API
       def render_error(status_code, json)
         json[:status] ||= Rack::Utils.status_code(status_code)
 
-        render status: status_code, json: json
+        render status: status_code, json:
       end
 
       def render_not_found(options = {})

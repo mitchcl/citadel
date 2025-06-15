@@ -57,10 +57,10 @@ rosters_with_values.each do |roster, value|
 
   body << 'Roster:'
   roster.users.each do |user|
-    user_p = UserPresenter.new(user, nil)
+    # user_p = UserPresenter.new(user, nil)
     body << "\t#{user.name}\t[[#{user.steam_id3}](https://ozfortress.com/users/steam_id/#{user.steam_id})]"
   end
 
   p body
-  Mailer.with(subject: subject, body: body.join("\n")).deliver_team.deliver_now
+  Mailer.with(subject:, body: body.join("\n")).deliver_team.deliver_now
 end

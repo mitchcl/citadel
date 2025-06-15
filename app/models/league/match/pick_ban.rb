@@ -20,16 +20,16 @@ class League
       delegate :league, to: :match
 
       def submit(user, map)
-        match.rounds.create!(map: map) if kind_pick?
+        match.rounds.create!(map:) if kind_pick?
 
-        update(picked_by: user, map: map)
+        update(picked_by: user, map:)
       end
 
       def defer!(user)
         transaction do
           shift_pending_pick_bans!
 
-          match.pick_bans.create!(order_number: order_number + 1, kind: kind, team: team_pick.last)
+          match.pick_bans.create!(order_number: order_number + 1, kind:, team: team_pick.last)
 
           self.kind = :deferred
           self.picked_by = user
@@ -60,7 +60,7 @@ class League
       private
 
       def shift_pending_pick_bans!
-        pick_bans = match.pick_bans.pending.where.not(id: id).to_a
+        pick_bans = match.pick_bans.pending.where.not(id:).to_a
 
         pick_bans.each do |pick_ban|
           pick_ban.swap_team

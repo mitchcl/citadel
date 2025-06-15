@@ -117,8 +117,8 @@ module Auth
       def validates_permission_to(action, subject, options = {})
         table_name = Util.grant_name(actor_name, action, subject)
 
-        grant = create_model(Auth::Grant, table_name: table_name, actor: self, action: action,
-                                          subject: subject, subject_options: options)
+        grant = create_model(Auth::Grant, table_name:, actor: self, action:,
+                                          subject:, subject_options: options)
 
         grant_models[action].update(subject => grant)
       end
@@ -126,8 +126,8 @@ module Auth
       def validates_prohibition_to(action, subject, options = {})
         table_name = Util.ban_name(actor_name, action, subject)
 
-        ban = create_model(Auth::Ban, table_name: table_name, actor: self, action: action,
-                                      subject: subject, subject_options: options)
+        ban = create_model(Auth::Ban, table_name:, actor: self, action:,
+                                      subject:, subject_options: options)
 
         ban_models[action].update(subject => ban)
       end

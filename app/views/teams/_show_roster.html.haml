@@ -10,7 +10,7 @@
 
   - roster.players.map(&:user_id).each do |id|
     %li.list-group-item
-      = render 'users/listing', user: users[id], team: team
+      = render('users/listing', user: users[id], team:)
 
 - accordion_id = "roster_#{roster.id}_accordion"
 .mb-3{ id: accordion_id }
@@ -23,7 +23,7 @@
         Matches
 
     .collapse{ id: matches_id, data: { parent: "##{accordion_id}" }, area: { labelledby: header_id } }
-      = render 'leagues/matches/matches_table', matches: matches, roster: roster
+      = render('leagues/matches/matches_table', matches:, roster:)
 
   .card.rounded-0
     - statistics_id = "#{accordion_id}_statistics"
@@ -34,7 +34,7 @@
         Statistics
 
     .collapse{ id: statistics_id, data: { parent: "##{accordion_id}" }, area: { labelledby: header_id } }
-      = render 'leagues/rosters/stats_table', roster: roster, roster_p: roster_p
+      = render('leagues/rosters/stats_table', roster:, roster_p:)
 
   .card.rounded-0
     - transfers_id = "#{accordion_id}_transfers"

@@ -86,15 +86,15 @@ class League
     end
 
     def add_player!(user)
-      players.create!(user: user)
+      players.create!(user:)
     end
 
     def remove_player!(user)
-      players.find_by(user: user).destroy!
+      players.find_by(user:).destroy!
     end
 
     def on_roster?(user)
-      players.exists?(user: user)
+      players.exists?(user:)
     end
 
     def tentative_player_count
@@ -148,7 +148,7 @@ class League
     def unique_within_league
       return if league.blank?
 
-      errors.add(:base, 'Can only sign up once') if league.rosters.exists?(team: team)
+      errors.add(:base, 'Can only sign up once') if league.rosters.exists?(team:)
     end
 
     def validate_schedule

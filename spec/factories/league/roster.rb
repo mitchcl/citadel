@@ -12,22 +12,22 @@ FactoryBot.define do
     end
 
     after(:build) do |roster, evaluator|
-      roster.players = evaluator.players || build_list(:league_roster_player, evaluator.player_count, roster: roster)
+      roster.players = evaluator.players || build_list(:league_roster_player, evaluator.player_count, roster:)
 
       roster.transfers ||= roster.players.map do |player|
-        build(:league_roster_transfer, roster: roster, user: player.user)
+        build(:league_roster_transfer, roster:, user: player.user)
       end
     end
 
     after(:stub) do |roster, evaluator|
-      players = evaluator.players || build_stubbed_list(:league_roster_player, evaluator.player_count, roster: roster)
+      players = evaluator.players || build_stubbed_list(:league_roster_player, evaluator.player_count, roster:)
 
       allow(roster).to receive(:players).and_return(players)
       allow(roster).to receive(:users).and_return(players.map(&:user))
       allow(roster).to receive(:on_roster?) { |user| players.any? { |player| player.user == user } }
 
       transfers = players.map do |player|
-        build_stubbed(:league_roster_transfer, roster: roster, user: player.user)
+        build_stubbed(:league_roster_transfer, roster:, user: player.user)
       end
       allow(roster).to receive(:transfers).and_return(transfers)
     end

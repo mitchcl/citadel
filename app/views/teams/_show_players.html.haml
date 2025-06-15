@@ -31,7 +31,7 @@
       - elsif user_can_edit_team?
         .button-group.pull-right= player_p.kick_button
 
-      = render 'users/listing', user: user, team: team
+      = render('users/listing', user:, team:)
 
 - unless transfers.empty?
   %h5 Transfer History

@@ -1,14 +1,13 @@
-%a#notifications-dropdown{ href: '#',
+%a#notifications-dropdown{ href:  '#',
                            class: 'position-relative d-block p-2 pr-0',
-                           data: { toggle: 'dropdown' } }
+                           data:  { toggle: 'dropdown' } }
   = inline_svg_tag 'open_iconic/bell.svg', class: 'icon'
 
   - unless notifications.empty?
     %span#notifications-badge{ class: 'badge badge-primary anchor-bottom-right' }
       = notifications.to_a.count { |n| !n.read }
 
-
-#notifications-dropdown-menu{ aria: { labelledby: 'notifications-dropdown' },
+#notifications-dropdown-menu{ aria:  { labelledby: 'notifications-dropdown' },
                               class: 'dropdown-menu dropdown-menu-right p-0 mt-2 mt-md-3' }
   .card.border-0
     .card-header
@@ -24,8 +23,7 @@
 
     %ul#notifications-list{ class: 'list-group list-group-flush' }
       - notifications.each do |notification|
-        = render 'notification', notification: notification
-
+        = render('notification', notification:)
 
 :javascript
   // Prevent inside clicks from dismissing dropdown

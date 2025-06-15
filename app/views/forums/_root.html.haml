@@ -18,11 +18,10 @@
   %ul.list-group.mb-3
     - topics.each do |topic|
       %li.list-group-item.bg-light
-        = render 'forums/topics/listing', topic: topic
-
+        = render('forums/topics/listing', topic:)
 
 - unless threads.empty?
   %ul.list-group.mb-3
     - threads.each do |thread|
       %li.list-group-item{ class: present(thread).status_classes }
-        = render 'forums/threads/listing', thread: thread
+        = render('forums/threads/listing', thread:)

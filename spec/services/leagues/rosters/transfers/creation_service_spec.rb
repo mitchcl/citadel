@@ -12,7 +12,7 @@ describe Leagues::Rosters::Transfers::CreationService do
   before { ActionMailer::Base.deliveries.clear }
 
   it 'successfully creates a transfer request to join' do
-    transfer_request = subject.call(roster, admin, user: user, is_joining: true)
+    transfer_request = subject.call(roster, admin, user:, is_joining: true)
 
     expect(transfer_request).to be_valid
     expect(roster.transfer_requests).to_not be_empty
@@ -21,7 +21,7 @@ describe Leagues::Rosters::Transfers::CreationService do
 
   it 'successfully creates a transfer request to leave' do
     roster.add_player!(user)
-    transfer_request = subject.call(roster, admin, user: user, is_joining: false)
+    transfer_request = subject.call(roster, admin, user:, is_joining: false)
 
     expect(transfer_request).to be_valid
     expect(roster.transfer_requests).to_not be_empty
@@ -31,9 +31,9 @@ describe Leagues::Rosters::Transfers::CreationService do
   it 'successfully overrides a transfer request when leaving' do
     roster2 = create(:league_roster, division: roster.division)
     roster2.add_player!(user)
-    create(:league_roster_transfer_request, roster: roster2, user: user, is_joining: false)
+    create(:league_roster_transfer_request, roster: roster2, user:, is_joining: false)
 
-    transfer_request = subject.call(roster, admin, user: user, is_joining: true)
+    transfer_request = subject.call(roster, admin, user:, is_joining: true)
 
     expect(transfer_request).to be_valid
     expect(roster.transfer_requests).to_not be_empty
@@ -41,7 +41,7 @@ describe Leagues::Rosters::Transfers::CreationService do
   end
 
   it 'fails with invalid data' do
-    transfer_request = subject.call(roster, admin, user: user, is_joining: false)
+    transfer_request = subject.call(roster, admin, user:, is_joining: false)
 
     expect(transfer_request).to be_invalid
     roster.reload

@@ -3,6 +3,3 @@ linters:
     max: 120
   ViewLength:
     max: 200
-
-exclude:
-  - 'vendor/**/*'

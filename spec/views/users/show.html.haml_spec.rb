@@ -5,8 +5,8 @@ describe 'users/show' do
   let(:teams) { build_stubbed_list(:team, 3) }
   let(:aka) { build_stubbed_list(:user_name_change, 5) }
   let(:titles) { build_stubbed_list(:user_title, 5) }
-  let(:team_transfers) { build_stubbed_list(:team_transfer, 5, user: user) }
-  let(:team_invites) { build_stubbed_list(:team_invite, 2, user: user) }
+  let(:team_transfers) { build_stubbed_list(:team_transfer, 5, user:) }
+  let(:team_invites) { build_stubbed_list(:team_invite, 2, user:) }
   let(:active_league) { build_stubbed(:league) }
   let(:signup_league) { build_stubbed(:league, signuppable: true) }
   let(:completed_league) { build_stubbed(:league, status: :completed) }
@@ -16,13 +16,13 @@ describe 'users/show' do
 
   before do
     roster_transfers = [active_league, signup_league, completed_league].map do |league|
-      division = build_stubbed(:league_division, league: league)
-      roster = build_stubbed(:league_roster, division: division)
-      build_stubbed(:league_roster_transfer, roster: roster, user: user)
+      division = build_stubbed(:league_division, league:)
+      roster = build_stubbed(:league_roster, division:)
+      build_stubbed(:league_roster_transfer, roster:, user:)
     end
 
     disbanded_roster = build_stubbed(:league_roster, disbanded: true)
-    roster_transfers << build_stubbed(:league_roster_transfer, roster: disbanded_roster, user: user)
+    roster_transfers << build_stubbed(:league_roster_transfer, roster: disbanded_roster, user:)
 
     assign(:user, user)
     assign(:comment, User::Comment.new)

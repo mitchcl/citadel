@@ -29,9 +29,9 @@ module Paths
           instance.respond_to?(method)
         end
 
-        def method_missing(method, *args, &block)
+        def method_missing(method, ...)
           if instance.respond_to?(method)
-            instance.send(method, *args, &block)
+            instance.send(method, ...)
           else
             super
           end

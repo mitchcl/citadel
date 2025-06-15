@@ -20,10 +20,10 @@ describe League::Roster::TransferRequest do
       user = create(:user)
       division = create(:league_division)
       division.league.update!(min_players: 1, max_players: 2)
-      roster = create(:league_roster, division: division)
-      roster2 = create(:league_roster, division: division)
+      roster = create(:league_roster, division:)
+      roster2 = create(:league_roster, division:)
       roster2.add_player!(user)
-      request = create(:league_roster_transfer_request, roster: roster, user: user, propagate: true)
+      request = create(:league_roster_transfer_request, roster:, user:, propagate: true)
 
       expect(request.approve(user)).to be_truthy
       expect(roster.on_roster?(user)).to be(true)
@@ -35,7 +35,7 @@ describe League::Roster::TransferRequest do
       roster = create(:league_roster, player_count: 3)
       user = roster.users.first
       request = create(:league_roster_transfer_request,
-                       roster: roster, user: user, is_joining: false)
+                       roster:, user:, is_joining: false)
 
       expect(request.approve(user)).to be_truthy
       expect(roster.on_roster?(user)).to be(false)
@@ -45,9 +45,9 @@ describe League::Roster::TransferRequest do
     it 'handles dependent transfers at minimum' do
       roster = create(:league_roster, player_count: 2)
       roster.league.update!(min_players: 2, max_players: 3)
-      request1 = create(:league_roster_transfer_request, roster: roster, propagate: true)
+      request1 = create(:league_roster_transfer_request, roster:, propagate: true)
       user = roster.users.first
-      request2 = create(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)
+      request2 = create(:league_roster_transfer_request, roster:, user:, is_joining: false)
 
       expect(request2.approve(user)).to be_falsey
       expect(roster.on_roster?(user)).to be true
@@ -66,8 +66,8 @@ describe League::Roster::TransferRequest do
       roster = create(:league_roster, player_count: 2)
       roster.league.update!(min_players: 1, max_players: 2)
       user = roster.users.first
-      request1 = create(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)
-      request2 = create(:league_roster_transfer_request, roster: roster, propagate: true)
+      request1 = create(:league_roster_transfer_request, roster:, user:, is_joining: false)
+      request2 = create(:league_roster_transfer_request, roster:, propagate: true)
 
       expect(request2.approve(user)).to be_falsey
       expect(roster.on_roster?(request2.user)).to be false
@@ -87,7 +87,7 @@ describe League::Roster::TransferRequest do
       roster.league.update!(min_players: 1, max_players: 2)
       user = roster.users.first
 
-      request = create(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)
+      request = create(:league_roster_transfer_request, roster:, user:, is_joining: false)
 
       expect(request.approve(user)).to be_truthy
       expect(roster.on_roster?(user)).to be false
@@ -113,7 +113,7 @@ describe League::Roster::TransferRequest do
       roster = create(:league_roster, player_count: 3)
       user = roster.users.first
       request = create(:league_roster_transfer_request,
-                       roster: roster, user: user, is_joining: false)
+                       roster:, user:, is_joining: false)
 
       expect(request.deny(user)).to be_truthy
       expect(roster.on_roster?(user)).to be(true)
@@ -123,9 +123,9 @@ describe League::Roster::TransferRequest do
     it 'handles dependent transfers at minimum' do
       roster = create(:league_roster, player_count: 2)
       roster.league.update!(min_players: 2, max_players: 3)
-      request1 = create(:league_roster_transfer_request, roster: roster, propagate: true)
+      request1 = create(:league_roster_transfer_request, roster:, propagate: true)
       user = roster.users.first
-      request2 = create(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)
+      request2 = create(:league_roster_transfer_request, roster:, user:, is_joining: false)
 
       expect(request1.deny(user)).to be_falsey
       expect(roster.on_roster?(request1.user)).to be false
@@ -144,8 +144,8 @@ describe League::Roster::TransferRequest do
       roster = create(:league_roster, player_count: 2)
       roster.league.update!(min_players: 1, max_players: 2)
       user = roster.users.first
-      request1 = create(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)
-      request2 = create(:league_roster_transfer_request, roster: roster, propagate: true)
+      request1 = create(:league_roster_transfer_request, roster:, user:, is_joining: false)
+      request2 = create(:league_roster_transfer_request, roster:, propagate: true)
 
       expect(request1.deny(user)).to be_falsey
       expect(roster.on_roster?(user)).to be true
@@ -167,7 +167,7 @@ describe League::Roster::TransferRequest do
       roster.league.update!(min_players: 1, max_players: 2)
       user = roster.users.first
 
-      request = create(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)
+      request = create(:league_roster_transfer_request, roster:, user:, is_joining: false)
 
       expect(request.deny(user)).to be_truthy
       expect(roster.on_roster?(user)).to be true
@@ -178,18 +178,18 @@ describe League::Roster::TransferRequest do
   context 'validation' do
     describe '#unique_within_league_check' do
       let(:division) { create(:league_division) }
-      let(:roster) { create(:league_roster, division: division) }
-      let(:roster2) { create(:league_roster, division: division) }
+      let(:roster) { create(:league_roster, division:) }
+      let(:roster2) { create(:league_roster, division:) }
       let(:user) { create(:user) }
 
       it 'validates unique within league' do
-        request = build(:league_roster_transfer_request, propagate: true, roster: roster, user: user)
+        request = build(:league_roster_transfer_request, propagate: true, roster:, user:)
         expect(request).to be_valid
-        expect(build(:league_roster_transfer_request, propagate: true, roster: roster)).to be_valid
+        expect(build(:league_roster_transfer_request, propagate: true, roster:)).to be_valid
         request.save!
         expect(build(:league_roster_transfer_request, propagate: true, roster: roster2,
-                                                      user: user)).to be_invalid
-        expect(build(:league_roster_transfer_request, propagate: true, roster: roster)).to be_valid
+                                                      user:)).to be_invalid
+        expect(build(:league_roster_transfer_request, propagate: true, roster:)).to be_valid
       end
     end
 
@@ -198,18 +198,18 @@ describe League::Roster::TransferRequest do
       let(:user) { create(:user) }
 
       it 'validates when joining' do
-        expect(build(:league_roster_transfer_request, roster: roster, user: user)).to be_invalid
+        expect(build(:league_roster_transfer_request, roster:, user:)).to be_invalid
         roster.team.add_player!(user)
-        expect(build(:league_roster_transfer_request, roster: roster, user: user)).to be_valid
+        expect(build(:league_roster_transfer_request, roster:, user:)).to be_valid
       end
 
       it "doesn't validate when leaving" do
         roster.add_player!(user)
 
-        expect(build(:league_roster_transfer_request, roster: roster, user: user,
+        expect(build(:league_roster_transfer_request, roster:, user:,
                                                       is_joining: false)).to be_valid
         roster.team.add_player!(user)
-        expect(build(:league_roster_transfer_request, roster: roster, user: user,
+        expect(build(:league_roster_transfer_request, roster:, user:,
                                                       is_joining: false)).to be_valid
       end
     end
@@ -221,15 +221,15 @@ describe League::Roster::TransferRequest do
       it 'validates when joining' do
         roster.team.add_player!(user)
 
-        expect(build(:league_roster_transfer_request, roster: roster, user: user)).to be_valid
+        expect(build(:league_roster_transfer_request, roster:, user:)).to be_valid
         roster.add_player!(user)
-        expect(build(:league_roster_transfer_request, roster: roster, user: user)).to be_invalid
+        expect(build(:league_roster_transfer_request, roster:, user:)).to be_invalid
       end
 
       it 'validates on roster' do
-        expect(build(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)).to be_invalid
+        expect(build(:league_roster_transfer_request, roster:, user:, is_joining: false)).to be_invalid
         roster.add_player!(user)
-        expect(build(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)).to be_valid
+        expect(build(:league_roster_transfer_request, roster:, user:, is_joining: false)).to be_valid
       end
     end
 
@@ -240,13 +240,13 @@ describe League::Roster::TransferRequest do
       it 'validates when joining' do
         roster.team.add_player!(user)
 
-        expect(build(:league_roster_transfer_request, roster: roster, user: user)).to be_invalid
+        expect(build(:league_roster_transfer_request, roster:, user:)).to be_invalid
       end
 
       it 'validates when leaving' do
         roster.add_player!(user)
 
-        expect(build(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)).to be_invalid
+        expect(build(:league_roster_transfer_request, roster:, user:, is_joining: false)).to be_invalid
       end
 
       it "doesn't validate for transfer" do
@@ -254,7 +254,7 @@ describe League::Roster::TransferRequest do
         roster2.team.add_player!(user)
         roster.add_player!(user)
 
-        expect(build(:league_roster_transfer_request, roster: roster2, user: user)).to be_valid
+        expect(build(:league_roster_transfer_request, roster: roster2, user:)).to be_valid
       end
     end
 
@@ -266,14 +266,14 @@ describe League::Roster::TransferRequest do
         roster.team.add_player!(user)
         user.ban(:use, :leagues)
 
-        expect(build(:league_roster_transfer_request, roster: roster, user: user)).to be_invalid
+        expect(build(:league_roster_transfer_request, roster:, user:)).to be_invalid
       end
 
       it "doesn't validate when leaving" do
         roster.add_player!(user)
         user.ban(:use, :leagues)
 
-        expect(build(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)).to be_valid
+        expect(build(:league_roster_transfer_request, roster:, user:, is_joining: false)).to be_valid
       end
     end
 
@@ -285,39 +285,39 @@ describe League::Roster::TransferRequest do
         it 'validates at maximum' do
           league.update!(min_players: 1, max_players: 2)
 
-          expect(build(:league_roster_transfer_request, roster: roster, propagate: true)).to be_invalid
+          expect(build(:league_roster_transfer_request, roster:, propagate: true)).to be_invalid
         end
 
         it 'validates with tentative size' do
           league.update!(min_players: 1, max_players: 3)
 
-          create(:league_roster_transfer_request, roster: roster, propagate: true)
+          create(:league_roster_transfer_request, roster:, propagate: true)
 
-          expect(build(:league_roster_transfer_request, roster: roster, propagate: true)).to be_invalid
+          expect(build(:league_roster_transfer_request, roster:, propagate: true)).to be_invalid
         end
 
         it 'validates with complex tentative size' do
           league.update!(min_players: 1, max_players: 5)
 
           3.times do
-            create(:league_roster_transfer_request, roster: roster, propagate: true)
+            create(:league_roster_transfer_request, roster:, propagate: true)
           end
 
           roster.users.each do |user|
-            create(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)
+            create(:league_roster_transfer_request, roster:, user:, is_joining: false)
           end
 
           2.times do
-            create(:league_roster_transfer_request, roster: roster, propagate: true)
+            create(:league_roster_transfer_request, roster:, propagate: true)
           end
 
-          expect(build(:league_roster_transfer_request, roster: roster, propagate: true)).to be_invalid
+          expect(build(:league_roster_transfer_request, roster:, propagate: true)).to be_invalid
         end
 
         it 'validates when below minimum' do
           league.update!(min_players: 3, max_players: 6)
 
-          expect(build(:league_roster_transfer_request, roster: roster, propagate: true)).to be_valid
+          expect(build(:league_roster_transfer_request, roster:, propagate: true)).to be_valid
         end
       end
 
@@ -327,22 +327,22 @@ describe League::Roster::TransferRequest do
         it 'validates at minimum' do
           league.update!(min_players: 2, max_players: 3)
 
-          expect(build(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)).to be_invalid
+          expect(build(:league_roster_transfer_request, roster:, user:, is_joining: false)).to be_invalid
         end
 
         it 'validates with tentative size' do
           league.update!(min_players: 1, max_players: 3)
 
           user2 = roster.users.second
-          create(:league_roster_transfer_request, roster: roster, user: user2, is_joining: false)
+          create(:league_roster_transfer_request, roster:, user: user2, is_joining: false)
 
-          expect(build(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)).to be_invalid
+          expect(build(:league_roster_transfer_request, roster:, user:, is_joining: false)).to be_invalid
         end
 
         it 'validates when above maximum' do
           league.update!(min_players: 1, max_players: 1)
 
-          expect(build(:league_roster_transfer_request, roster: roster, user: user, is_joining: false)).to be_valid
+          expect(build(:league_roster_transfer_request, roster:, user:, is_joining: false)).to be_valid
         end
       end
     end
@@ -357,7 +357,7 @@ describe League::Roster::TransferRequest do
         league.update!(min_players: 2, max_players: 3)
         roster2.team.add_player!(user)
 
-        expect(build(:league_roster_transfer_request, roster: roster2, user: user, is_joining: true)).to be_invalid
+        expect(build(:league_roster_transfer_request, roster: roster2, user:, is_joining: true)).to be_invalid
       end
 
       it 'validates when above maximum' do
@@ -365,16 +365,16 @@ describe League::Roster::TransferRequest do
         2.times { roster.add_player!(create(:user)) }
         roster2.team.add_player!(user)
 
-        expect(build(:league_roster_transfer_request, roster: roster2, user: user, is_joining: true)).to be_valid
+        expect(build(:league_roster_transfer_request, roster: roster2, user:, is_joining: true)).to be_valid
       end
 
       it 'validates with tentative size' do
         league.update!(min_players: 2, max_players: 3)
         roster2.team.add_player!(user)
 
-        create(:league_roster_transfer_request, roster: roster, propagate: true)
+        create(:league_roster_transfer_request, roster:, propagate: true)
 
-        expect(build(:league_roster_transfer_request, roster: roster2, user: user, is_joining: true)).to be_valid
+        expect(build(:league_roster_transfer_request, roster: roster2, user:, is_joining: true)).to be_valid
       end
     end
   end

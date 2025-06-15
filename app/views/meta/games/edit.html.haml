@@ -3,7 +3,7 @@
     %b Information
   .card-body
     = bootstrap_form_for @game, url: meta_game_path(@game) do |f|
-      = render 'game_form', f: f
+      = render('game_form', f:)
 
       .d-flex.justify-content-end
         = link_to 'Cancel', meta_game_path(@game), class: 'btn btn-link mr-2'

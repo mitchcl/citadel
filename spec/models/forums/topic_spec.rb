@@ -37,7 +37,7 @@ describe Forums::Topic do
 
   it 'updates depth of children when moved' do
     topic = create(:forums_topic, parent: nil)
-    c_thread = create(:forums_thread, topic: topic)
+    c_thread = create(:forums_thread, topic:)
     c_topic = create(:forums_topic, parent: topic)
     c_topic2 = create(:forums_topic, parent: topic)
     gc_thread = create(:forums_thread, topic: c_topic)
@@ -61,8 +61,8 @@ describe Forums::Topic do
 
       expect(topic.visible_threads_count).to eq(0)
 
-      create(:forums_thread, topic: topic, hidden: true)
-      create(:forums_thread, topic: topic)
+      create(:forums_thread, topic:, hidden: true)
+      create(:forums_thread, topic:)
 
       topic.reload
 

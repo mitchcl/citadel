@@ -35,7 +35,7 @@ describe Users::CommentsController do
   end
 
   context 'existing comment' do
-    let(:comment) { create(:user_comment, user: user, created_by: author, content: 'Foo') }
+    let(:comment) { create(:user_comment, user:, created_by: author, content: 'Foo') }
 
     describe 'GET #edit' do
       it 'succeeds for authorized user' do
@@ -70,7 +70,7 @@ describe Users::CommentsController do
         author.grant(:edit, :users)
         sign_in author
 
-        create_list(:user_comment_edit, 4, comment: comment, created_by: author)
+        create_list(:user_comment_edit, 4, comment:, created_by: author)
 
         get :edits, params: { user_id: user.id, id: comment.id }
 

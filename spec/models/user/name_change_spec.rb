@@ -16,15 +16,15 @@ describe User::NameChange do
   it 'verifies name is unique' do
     user = build(:user)
 
-    expect(build(:user_name_change, user: user, name: 'A')).to be_valid
-    expect(build(:user_name_change, user: user, name: user.name)).to be_invalid
+    expect(build(:user_name_change, user:, name: 'A')).to be_valid
+    expect(build(:user_name_change, user:, name: user.name)).to be_invalid
   end
 
   it 'only allows one request per user' do
     user = create(:user)
-    create(:user_name_change, user: user)
+    create(:user_name_change, user:)
 
-    expect(build(:user_name_change, user: user)).to be_invalid
+    expect(build(:user_name_change, user:)).to be_invalid
   end
 
   it 'verifies name is not already used by user' do

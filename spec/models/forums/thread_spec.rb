@@ -19,7 +19,7 @@ describe Forums::Thread do
     topic = create(:forums_topic)
     other_topic = create(:forums_topic, parent: topic)
 
-    thread = create(:forums_thread, topic: topic)
+    thread = create(:forums_thread, topic:)
     thread.reload
     expect(thread.depth).to eq(1)
 
@@ -39,7 +39,7 @@ describe Forums::Thread do
     it 'inherits hidden and pinned' do
       topic = build(:forums_topic, hidden: true, locked: true)
 
-      thread = Forums::Thread.new(topic: topic)
+      thread = Forums::Thread.new(topic:)
       expect(thread.locked?).to be(false)
       expect(thread.pinned?).to be(false)
       expect(thread.hidden?).to be(true)
@@ -48,7 +48,7 @@ describe Forums::Thread do
     it 'respects default hidden' do
       topic = build(:forums_topic, hidden: false, default_hidden: true)
 
-      thread = Forums::Thread.new(topic: topic)
+      thread = Forums::Thread.new(topic:)
       expect(thread.locked?).to be(false)
       expect(thread.pinned?).to be(false)
       expect(thread.hidden?).to be(true)
@@ -57,7 +57,7 @@ describe Forums::Thread do
     it 'respects default locked' do
       topic = build(:forums_topic, default_locked: true, locked: false)
 
-      thread = Forums::Thread.new(topic: topic)
+      thread = Forums::Thread.new(topic:)
       expect(thread.locked?).to be(true)
       expect(thread.pinned?).to be(false)
       expect(thread.hidden?).to be(false)

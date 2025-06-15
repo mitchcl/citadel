@@ -11,6 +11,5 @@
     of user
     = link_to @user.name, user_path(@user)
 
-
 - @edits.each do |comment_edit|
-  = render 'shared/comment_edit', comment_edit: comment_edit, class: 'mb-4'
+  = render 'shared/comment_edit', comment_edit:, class: 'mb-4'

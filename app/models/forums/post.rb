@@ -20,12 +20,12 @@ module Forums
     end
 
     def previous_post
-      @previous_post ||= thread.posts.where('created_at < ?', created_at).last
+      @previous_post ||= thread.posts.where(created_at: ...created_at).last
     end
 
     def create_edit!(user)
-      PostEdit.create!(created_by: user, post: self, content: content,
-                       content_render_cache: content_render_cache)
+      PostEdit.create!(created_by: user, post: self, content:,
+                       content_render_cache:)
     end
 
     def first_post?
@@ -41,7 +41,7 @@ module Forums
     def self.page_of(post)
       return 1 unless post
 
-      post_index = post.thread.posts.where('created_at < ?', post.created_at).count
+      post_index = post.thread.posts.where(created_at: ...post.created_at).count
       (post_index / Post.per_page) + 1
     end
   end

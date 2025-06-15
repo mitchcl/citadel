@@ -40,7 +40,7 @@ describe Users::NotificationsController do
   end
 
   context 'single notification' do
-    let!(:notification) { create(:user_notification, user: user) }
+    let!(:notification) { create(:user_notification, user:) }
 
     describe 'GET #show' do
       it 'succeeds for notified user' do
@@ -81,7 +81,7 @@ describe Users::NotificationsController do
   end
 
   context 'many notifications' do
-    let!(:notifications) { create_list(:user_notification, 5, user: user) }
+    let!(:notifications) { create_list(:user_notification, 5, user:) }
 
     describe 'GET #index' do
       it 'succeeds for notified user' do

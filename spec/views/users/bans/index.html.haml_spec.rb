@@ -5,9 +5,9 @@ describe 'users/bans/index' do
 
   let(:bans) do
     [
-      user.bans_for(:use, :teams).new(id: 1, user: user, created_at: Time.zone.now),
-      user.bans_for(:use, :users).new(id: 2, user: user, created_at: Time.zone.now, duration: 1.hour),
-      user.bans_for(:use, :leagues).new(id: 3, user: user, created_at: 2.hours.ago, duration: 1.hour),
+      user.bans_for(:use, :teams).new(id: 1, user:, created_at: Time.zone.now),
+      user.bans_for(:use, :users).new(id: 2, user:, created_at: Time.zone.now, duration: 1.hour),
+      user.bans_for(:use, :leagues).new(id: 3, user:, created_at: 2.hours.ago, duration: 1.hour),
     ]
   end
 

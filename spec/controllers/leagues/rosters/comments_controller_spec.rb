@@ -41,7 +41,7 @@ describe Leagues::Rosters::CommentsController do
   end
 
   context 'existing comment' do
-    let(:comment) { create(:league_roster_comment, roster: roster, created_by: user, content: 'Foo') }
+    let(:comment) { create(:league_roster_comment, roster:, created_by: user, content: 'Foo') }
 
     describe 'GET #edit' do
       it 'succeeds for authorized user' do
@@ -76,7 +76,7 @@ describe Leagues::Rosters::CommentsController do
         user.grant(:edit, roster.league)
         sign_in user
 
-        create_list(:league_roster_comment_edit, 4, comment: comment, created_by: user)
+        create_list(:league_roster_comment_edit, 4, comment:, created_by: user)
 
         get :edits, params: { roster_id: roster.id, id: comment.id }
 

@@ -16,8 +16,8 @@ class League
       scope :ordered, -> { order(:created_at) }
 
       def create_edit!(user)
-        CommentEdit.create!(created_by: user, comment: self, content: content,
-                            content_render_cache: content_render_cache)
+        CommentEdit.create!(created_by: user, comment: self, content:,
+                            content_render_cache:)
       end
 
       paths do

@@ -14,7 +14,7 @@ def get_bans(steam_ids)
   json = JSON.parse(response)
 
   json['players'].select { |player| player['VACBanned'] }
-                 .map { |player| player['SteamId'] }
+                 .pluck('SteamId')
                  .map(&:to_i)
 end
 
@@ -22,7 +22,7 @@ User.order(:id).find_in_batches(batch_size: 10) do |users|
   steam_ids = users.map(&:steam_id)
   bans = get_bans(steam_ids)
   bans.each do |steam_id|
-    user = User.find_by(steam_id: steam_id)
+    user = User.find_by(steam_id:)
     puts("#{user.name}: https://ozfortress.com/users/#{user.id}")
   end
 end

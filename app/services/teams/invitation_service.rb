@@ -3,7 +3,7 @@ module Teams
     include BaseService
 
     def call(team, user)
-      invite = team.invites.new(user: user)
+      invite = team.invites.new(user:)
 
       invite.transaction do
         invite.save || rollback!

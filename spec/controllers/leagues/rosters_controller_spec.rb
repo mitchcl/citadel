@@ -4,8 +4,8 @@ describe Leagues::RostersController do
   let(:user) { create(:user) }
   let(:team) { create(:team) }
   let(:league) { create(:league, signuppable: true, min_players: 1) }
-  let!(:div) { create(:league_division, league: league) }
-  let!(:div2) { create(:league_division, league: league) }
+  let!(:div) { create(:league_division, league:) }
+  let!(:div2) { create(:league_division, league:) }
 
   before do
     team.add_player!(user)
@@ -158,7 +158,7 @@ describe Leagues::RostersController do
   end
 
   context 'existing roster' do
-    let(:roster) { create(:league_roster, division: div, team: team) }
+    let(:roster) { create(:league_roster, division: div, team:) }
 
     describe 'GET #edit' do
       it 'succeeds for authorized admin' do
