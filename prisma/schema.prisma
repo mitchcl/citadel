@@ -25,6 +25,8 @@ model User {
   enabled       Boolean  @default(true)
   admin         Boolean  @default(false)
   banned        Boolean  @default(false)
+  banned_until  DateTime?
+  ban_reason    String?
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
 
@@ -50,6 +52,13 @@ model User {
   forums_post_edits           ForumsPostEdit[]
   forums_topic_subscriptions  ForumsTopicSubscription[]
   forums_thread_subscriptions ForumsThreadSubscription[]
+
+  // Admin relationships
+  admin_notes_created UserAdminNote[] @relation("AdminNotes")
+  admin_notes_about   UserAdminNote[]
+  ban_history         UserBanHistory[]
+  bans_issued         UserBanHistory[] @relation("IssuedBans")
+  unbans_issued       UserBanHistory[] @relation("UnbannedBy")
 
   // Approval relationships
   approved_name_changes UserNameChange[] @relation("ApprovedBy")
@@ -473,4 +482,39 @@ model ForumsThreadSubscription {
 
   @@unique([thread_id, user_id])
   @@map("forums_thread_subscriptions")
+}
+
+model UserAdminNote {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  admin_id   Int
+  note       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user  User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  admin User @relation("AdminNotes", fields: [admin_id], references: [id], onDelete: Cascade)
+
+  @@map("user_admin_notes")
+}
+
+model UserBanHistory {
+  id            Int       @id @default(autoincrement())
+  user_id       Int
+  banned_by_id  Int
+  ban_reason    String?
+  banned_at     DateTime  @default(now())
+  banned_until  DateTime?
+  unbanned_at   DateTime?
+  unbanned_by_id Int?
+  unban_reason  String?
+  is_active     Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
+  user       User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  banned_by  User  @relation("IssuedBans", fields: [banned_by_id], references: [id], onDelete: Cascade)
+  unbanned_by User? @relation("UnbannedBy", fields: [unbanned_by_id], references: [id], onDelete: SetNull)
+
+  @@map("user_ban_history")
 }

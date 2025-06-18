@@ -45,6 +45,25 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
         },
         orderBy: { created_at: 'desc' },
       },
+      ban_history: {
+        include: {
+          banned_by: {
+            select: {
+              id: true,
+              name: true,
+            }
+          },
+          unbanned_by: {
+            select: {
+              id: true,
+              name: true,
+            }
+          }
+        },
+        orderBy: {
+          created_at: 'desc'
+        }
+      },
       titles: {
         orderBy: { created_at: 'desc' },
       },
@@ -191,6 +210,9 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
           <TabsTrigger value="teams">Teams</TabsTrigger>
           <TabsTrigger value="league-history">League History</TabsTrigger>
           <TabsTrigger value="forum-activity">Forum Activity</TabsTrigger>
+          {user.ban_history.length > 0 && (
+            <TabsTrigger value="ban-history">Ban History</TabsTrigger>
+          )}
         </TabsList>
 
         {/* Teams Tab */}
@@ -322,6 +344,66 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
             </CardContent>
           </Card>
         </TabsContent>
+
+        {/* Ban History Tab */}
+        {user.ban_history.length > 0 && (
+          <TabsContent value="ban-history">
+            <Card>
+              <CardHeader>
+                <CardTitle>Ban History</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {user.ban_history.map((ban) => (
+                    <div 
+                      key={ban.id} 
+                      className={`border rounded p-4 ${ban.is_active ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-gray-50 opacity-75'}`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <Badge 
+                            variant={ban.is_active ? "destructive" : "secondary"}
+                          >
+                            {ban.is_active ? "Current Ban" : "Past Ban"}
+                          </Badge>
+                          {ban.banned_until && (
+                            <Badge variant="outline">
+                              {ban.banned_until ? 
+                                `Until ${new Date(ban.banned_until).toLocaleDateString()}` : 
+                                "Permanent"
+                              }
+                            </Badge>
+                          )}
+                        </div>
+                        <span className="text-sm text-muted-foreground">
+                          {new Date(ban.banned_at).toLocaleDateString()}
+                        </span>
+                      </div>
+                      
+                      {ban.ban_reason && (
+                        <div className="mb-2">
+                          <span className="text-sm font-medium">Reason:</span>{" "}
+                          <span className="text-sm">{ban.ban_reason}</span>
+                        </div>
+                      )}
+                      
+                      {ban.unbanned_at && (
+                        <div className="text-sm text-muted-foreground">
+                          Ban removed on {new Date(ban.unbanned_at).toLocaleDateString()}
+                          {ban.unban_reason && (
+                            <div className="mt-1">
+                              <span className="font-medium">Removal reason:</span> {ban.unban_reason}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   )
