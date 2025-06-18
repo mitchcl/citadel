@@ -262,7 +262,12 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
                       </Avatar>
                       <div>
                         <div className="font-medium flex items-center gap-2">
-                          {user.name}
+                          <Link 
+                            href={`/admin/users/${user.id}`}
+                            className="hover:text-primary transition-colors"
+                          >
+                            {user.name}
+                          </Link>
                           {user.admin && (
                             <Badge variant="destructive" className="text-xs">Admin</Badge>
                           )}
@@ -324,6 +329,12 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
                         <Link href={`/users/${user.id}`}>
                           <Eye className="h-3 w-3 mr-1" />
                           View
+                        </Link>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/admin/users/${user.id}`}>
+                          <Shield className="h-3 w-3 mr-1" />
+                          Admin
                         </Link>
                       </Button>
                       <UserActions user={user} />

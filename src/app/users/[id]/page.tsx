@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -24,6 +26,7 @@ interface UserProfilePageProps {
 
 export default async function UserProfilePage({ params }: UserProfilePageProps) {
   const { id } = await params
+  const session = await getServerSession(authOptions)
   
   const user = await prisma.user.findUnique({
     where: { id: parseInt(id) },
@@ -105,6 +108,16 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
             Back to Users
           </Link>
         </Button>
+        
+        {/* Admin button for admins */}
+        {session?.user?.admin && (
+          <Button variant="outline" asChild>
+            <Link href={`/admin/users/${id}`}>
+              <Shield className="h-4 w-4 mr-2" />
+              Admin Actions
+            </Link>
+          </Button>
+        )}
       </div>
 
       {/* User Profile Header */}

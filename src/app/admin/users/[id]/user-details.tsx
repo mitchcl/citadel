@@ -102,10 +102,11 @@ export function UserDetails({ user: initialUser }: UserDetailsProps) {
   const [showNoteDialog, setShowNoteDialog] = useState(false)
   
   // Ban form state
-  const [banType, setBanType] = useState<"permanent" | "temporary">("temporary")
+  const [banType, setBanType] = useState<"permanent" | "temporary" | "specific_date">("temporary")
   const [banLength, setBanLength] = useState("7")
   const [banUnit, setBanUnit] = useState("days")
   const [banReason, setBanReason] = useState("")
+  const [banEndDate, setBanEndDate] = useState("")
   
   // Edit form state
   const [editForm, setEditForm] = useState({
@@ -167,8 +168,17 @@ export function UserDetails({ user: initialUser }: UserDetailsProps) {
   const handleBan = () => {
     let bannedUntil = null
     if (banType === "temporary") {
-      const now = new Date()
       const duration = parseInt(banLength)
+      if (isNaN(duration) || duration <= 0) {
+        toast({
+          title: "Error",
+          description: "Please enter a valid ban duration.",
+          variant: "destructive",
+        })
+        return
+      }
+      
+      const now = new Date()
       switch (banUnit) {
         case "hours":
           bannedUntil = new Date(now.getTime() + duration * 60 * 60 * 1000)
@@ -183,7 +193,18 @@ export function UserDetails({ user: initialUser }: UserDetailsProps) {
           bannedUntil = new Date(now.getTime() + duration * 30 * 24 * 60 * 60 * 1000)
           break
       }
+    } else if (banType === "specific_date") {
+      if (!banEndDate) {
+        toast({
+          title: "Error",
+          description: "Please select a ban end date.",
+          variant: "destructive",
+        })
+        return
+      }
+      bannedUntil = new Date(banEndDate)
     }
+    // For permanent bans, bannedUntil remains null
 
     handleAction("ban", {
       ban_reason: banReason,
@@ -194,6 +215,7 @@ export function UserDetails({ user: initialUser }: UserDetailsProps) {
     setBanLength("7")
     setBanUnit("days")
     setBanType("temporary")
+    setBanEndDate("")
   }
 
   const handleUnban = () => {
@@ -244,6 +266,27 @@ export function UserDetails({ user: initialUser }: UserDetailsProps) {
           </div>
           
           <div className="flex gap-2">
+            {/* Ban/Unban buttons */}
+            {isCurrentlyBanned ? (
+              <Button 
+                variant="outline" 
+                onClick={() => setShowUnbanDialog(true)}
+                className="text-green-600 hover:text-green-700"
+              >
+                <UserCheck className="w-4 h-4 mr-2" />
+                Unban User
+              </Button>
+            ) : (
+              <Button 
+                variant="outline" 
+                onClick={() => setShowBanDialog(true)}
+                className="text-red-600 hover:text-red-700"
+              >
+                <Ban className="w-4 h-4 mr-2" />
+                Ban User
+              </Button>
+            )}
+            
             <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
               <DialogTrigger asChild>
                 <Button variant="outline">
@@ -312,18 +355,6 @@ export function UserDetails({ user: initialUser }: UserDetailsProps) {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-
-            {isCurrentlyBanned ? (
-              <Button onClick={() => setShowUnbanDialog(true)} disabled={isLoading}>
-                <UserCheck className="w-4 h-4 mr-2" />
-                Unban User
-              </Button>
-            ) : (
-              <Button variant="destructive" onClick={() => setShowBanDialog(true)} disabled={isLoading}>
-                <Ban className="w-4 h-4 mr-2" />
-                Ban User
-              </Button>
-            )}
           </div>
         </div>
       </div>
@@ -507,12 +538,13 @@ export function UserDetails({ user: initialUser }: UserDetailsProps) {
           <div className="space-y-4">
             <div>
               <Label>Ban Type</Label>
-              <Select value={banType} onValueChange={(value: "permanent" | "temporary") => setBanType(value)}>
+              <Select value={banType} onValueChange={(value: "permanent" | "temporary" | "specific_date") => setBanType(value)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="temporary">Temporary</SelectItem>
+                  <SelectItem value="temporary">Temporary (Duration)</SelectItem>
+                  <SelectItem value="specific_date">Until Specific Date</SelectItem>
                   <SelectItem value="permanent">Permanent</SelectItem>
                 </SelectContent>
               </Select>
@@ -545,6 +577,20 @@ export function UserDetails({ user: initialUser }: UserDetailsProps) {
                 </div>
               </div>
             )}
+            {banType === "specific_date" && (
+              <div>
+                <Label>Ban Until Date & Time</Label>
+                <Input
+                  type="datetime-local"
+                  value={banEndDate}
+                  onChange={(e) => setBanEndDate(e.target.value)}
+                  min={new Date().toISOString().slice(0, 16)}
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Select the exact date and time when the ban should expire
+                </p>
+              </div>
+            )}
             
             <div>
               <Label>Reason (Public)</Label>
@@ -559,7 +605,14 @@ export function UserDetails({ user: initialUser }: UserDetailsProps) {
           
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleBan} className="bg-red-600 hover:bg-red-700">
+            <AlertDialogAction 
+              onClick={handleBan} 
+              className="bg-red-600 hover:bg-red-700"
+              disabled={
+                (banType === "temporary" && (!banLength || isNaN(parseInt(banLength)) || parseInt(banLength) <= 0)) ||
+                (banType === "specific_date" && !banEndDate)
+              }
+            >
               Ban User
             </AlertDialogAction>
           </AlertDialogFooter>
