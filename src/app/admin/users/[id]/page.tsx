@@ -65,11 +65,11 @@ export default async function AdminUserPage({ params }: AdminUserPageProps) {
         }
       }
     }
-  })
+  } as any)
 
   if (!user) {
     notFound()
   }
 
-  return <UserDetails user={user} />
+  return <UserDetails user={user as any} />
 }

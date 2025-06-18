@@ -1,8 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -30,17 +29,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { 
-  Users, 
-  Shield, 
   Ban, 
   UserCheck, 
-  Calendar,
-  Mail,
   Edit,
   MessageSquare,
   Plus,
-  Clock,
-  AlertTriangle,
   ArrowLeft
 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
@@ -100,7 +93,6 @@ interface UserDetailsProps {
 }
 
 export function UserDetails({ user: initialUser }: UserDetailsProps) {
-  const router = useRouter()
   const { toast } = useToast()
   const [user, setUser] = useState(initialUser)
   const [isLoading, setIsLoading] = useState(false)

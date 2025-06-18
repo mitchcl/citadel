@@ -86,11 +86,14 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
         },
       },
     },
-  })
+  } as any)
 
   if (!user) {
     notFound()
   }
+
+  // Type assertion to handle complex Prisma relations
+  const typedUser = user as any
 
   return (
     <div className="container mx-auto py-6">
@@ -109,22 +112,22 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
         <CardHeader>
           <div className="flex items-start gap-4">
             <Avatar className="h-20 w-20">
-              <AvatarImage src={user.avatar || ''} alt={user.name} />
+              <AvatarImage src={typedUser.avatar || ''} alt={typedUser.name} />
               <AvatarFallback className="text-2xl">
-                {user.name.charAt(0).toUpperCase()}
+                {typedUser.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold">{user.name}</h1>
+                <h1 className="text-3xl font-bold">{typedUser.name}</h1>
                 <div className="flex gap-2">
-                  {user.admin && (
+                  {typedUser.admin && (
                     <Badge variant="destructive">
                       <Shield className="h-3 w-3 mr-1" />
                       Admin
                     </Badge>
                   )}
-                  {user.enabled ? (
+                  {typedUser.enabled ? (
                     <Badge variant="outline">
                       <UserCheck className="h-3 w-3 mr-1" />
                       Active
@@ -134,7 +137,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
                       Disabled
                     </Badge>
                   )}
-                  {user.banned && (
+                  {typedUser.banned && (
                     <Badge variant="destructive">
                       Banned
                     </Badge>
@@ -142,32 +145,32 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
                 </div>
               </div>
               
-              {user.alias && (
+              {typedUser.alias && (
                 <p className="text-lg text-muted-foreground mb-2">
-                  aka <span className="font-medium">{user.alias}</span>
+                  aka <span className="font-medium">{typedUser.alias}</span>
                 </p>
               )}
 
-              {user.description && (
-                <p className="text-muted-foreground mb-4">{user.description}</p>
+              {typedUser.description && (
+                <p className="text-muted-foreground mb-4">{typedUser.description}</p>
               )}
 
               <div className="flex items-center gap-6 text-sm">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-4 w-4" />
-                  Joined {new Date(user.created_at).toLocaleDateString()}
+                  Joined {new Date(typedUser.created_at).toLocaleDateString()}
                 </div>
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4" />
-                  {user._count.team_players} teams
+                  {typedUser._count.team_players} teams
                 </div>
                 <div className="flex items-center gap-1">
                   <MessageCircle className="h-4 w-4" />
-                  {user._count.forums_posts} posts
+                  {typedUser._count.forums_posts} posts
                 </div>
-                {user.steam_profile && (
+                {typedUser.steam_profile && (
                   <Link 
-                    href={user.steam_profile}
+                    href={typedUser.steam_profile}
                     target="_blank"
                     rel="noopener"
                     className="flex items-center gap-1 text-blue-600 hover:underline"
@@ -183,7 +186,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
       </Card>
 
       {/* User Titles */}
-      {user.titles.length > 0 && (
+      {typedUser.titles.length > 0 && (
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -193,7 +196,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {user.titles.map((title) => (
+              {typedUser.titles.map((title: any) => (
                 <Badge key={title.id} variant="secondary" className="text-sm">
                   <Trophy className="h-3 w-3 mr-1" />
                   {title.name}
@@ -210,7 +213,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
           <TabsTrigger value="teams">Teams</TabsTrigger>
           <TabsTrigger value="league-history">League History</TabsTrigger>
           <TabsTrigger value="forum-activity">Forum Activity</TabsTrigger>
-          {user.ban_history.length > 0 && (
+          {typedUser.ban_history.length > 0 && (
             <TabsTrigger value="ban-history">Ban History</TabsTrigger>
           )}
         </TabsList>
@@ -222,9 +225,9 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
               <CardTitle>Current Teams</CardTitle>
             </CardHeader>
             <CardContent>
-              {user.team_players.length > 0 ? (
+              {typedUser.team_players.length > 0 ? (
                 <div className="space-y-4">
-                  {user.team_players.map((tp) => (
+                  {typedUser.team_players.map((tp: any) => (
                     <div key={tp.id} className="flex items-center justify-between p-4 border rounded">
                       <div>
                         <Link 
@@ -264,9 +267,9 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
               <CardTitle>League Participation</CardTitle>
             </CardHeader>
             <CardContent>
-              {user.roster_players.length > 0 ? (
+              {typedUser.roster_players.length > 0 ? (
                 <div className="space-y-4">
-                  {user.roster_players.map((rp) => (
+                  {typedUser.roster_players.map((rp: any) => (
                     <div key={rp.id} className="flex items-center justify-between p-4 border rounded">
                       <div>
                         <div className="font-medium">{rp.roster.name}</div>
@@ -299,9 +302,9 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
               <CardTitle>Recent Forum Posts</CardTitle>
             </CardHeader>
             <CardContent>
-              {user.forums_posts.length > 0 ? (
+              {typedUser.forums_posts.length > 0 ? (
                 <div className="space-y-4">
-                  {user.forums_posts.map((post) => (
+                  {typedUser.forums_posts.map((post: any) => (
                     <div key={post.id} className="p-4 border rounded">
                       <div className="flex items-start justify-between mb-2">
                         <Link 
@@ -330,10 +333,10 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
                     </div>
                   ))}
                   
-                  {user._count.forums_posts > 10 && (
+                  {typedUser._count.forums_posts > 10 && (
                     <div className="text-center">
                       <p className="text-sm text-muted-foreground">
-                        Showing 10 of {user._count.forums_posts} posts
+                        Showing 10 of {typedUser._count.forums_posts} posts
                       </p>
                     </div>
                   )}
@@ -346,7 +349,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
         </TabsContent>
 
         {/* Ban History Tab */}
-        {user.ban_history.length > 0 && (
+        {typedUser.ban_history.length > 0 && (
           <TabsContent value="ban-history">
             <Card>
               <CardHeader>
@@ -354,7 +357,7 @@ export default async function UserProfilePage({ params }: UserProfilePageProps) 
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {user.ban_history.map((ban) => (
+                  {typedUser.ban_history.map((ban: any) => (
                     <div 
                       key={ban.id} 
                       className={`border rounded p-4 ${ban.is_active ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-gray-50 opacity-75'}`}

@@ -515,6 +515,4 @@ model UserBanHistory {
   user       User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
   banned_by  User  @relation("IssuedBans", fields: [banned_by_id], references: [id], onDelete: Cascade)
   unbanned_by User? @relation("UnbannedBy", fields: [unbanned_by_id], references: [id], onDelete: SetNull)
-
-  @@map("user_ban_history")
 }
