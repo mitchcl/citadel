@@ -64,7 +64,11 @@ export async function POST(
     const team = await prisma.team.findUnique({
       where: { id: teamId },
       include: {
-        users: true,
+        players: {
+          include: {
+            user: true
+          }
+        },
         rosters: {
           where: {
             division: {
@@ -81,8 +85,7 @@ export async function POST(
 
     // Check if user has permission to register this team
     const userId = parseInt(session.user.id)
-    const canRegister = team.captain_id === userId || 
-                       team.users.some(user => user.id === userId)
+    const canRegister = team.players.some(player => player.user.id === userId)
 
     if (!canRegister) {
       return NextResponse.json({ error: "You don't have permission to register this team" }, { status: 403 })
@@ -94,7 +97,7 @@ export async function POST(
     }
 
     // Validate selected players
-    const validPlayerIds = team.users.map(user => user.id)
+    const validPlayerIds = team.players.map(player => player.user.id)
     const invalidPlayers = selected_players.filter((id: number) => !validPlayerIds.includes(id))
     
     if (invalidPlayers.length > 0) {
@@ -119,23 +122,13 @@ export async function POST(
       // Create the roster
       const roster = await tx.roster.create({
         data: {
+          league_id: leagueId,
           name: roster_name,
           description: description || null,
           team_id: teamId,
           division_id: divisionId,
           approved: false, // Rosters need admin approval
           disbanded: false,
-          points: 0,
-          wonRounds: 0,
-          lostRounds: 0,
-          drawnRounds: 0,
-          totalScores: 0,
-          totalScoreDifference: 0,
-          byeMatches: 0,
-          placement: null,
-          seeding: null,
-          notice: null,
-          ranking: null,
         }
       })
 

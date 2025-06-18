@@ -2,20 +2,22 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { ArrowLeft, MessageCircle } from 'lucide-react'
+import { ArrowLeft, MessageCircle, AlertCircle } from 'lucide-react'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 
 interface Thread {
   id: number
   title: string
-  topic?: {
+  topic: {
     id: number
     name: string
-  }
+  } | null
 }
 
 interface ReplyFormProps {
@@ -24,14 +26,20 @@ interface ReplyFormProps {
 
 export function ReplyForm({ thread }: ReplyFormProps) {
   const router = useRouter()
+  const { data: session, status } = useSession()
   const [isLoading, setIsLoading] = useState(false)
   const [content, setContent] = useState('')
+  const [error, setError] = useState('')
+
+  const isContentValid = content.trim().length >= 10
+  const isFormDisabled = isLoading || !isContentValid || status === 'loading'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!content.trim()) return
+    if (!content.trim() || content.length < 10) return
 
     setIsLoading(true)
+    setError('')
     try {
       const response = await fetch('/api/forums/posts', {
         method: 'POST',
@@ -48,10 +56,12 @@ export function ReplyForm({ thread }: ReplyFormProps) {
         const { post } = await response.json()
         router.push(`/forums/threads/${thread.id}#post-${post.id}`)
       } else {
-        console.error('Failed to create post')
+        const errorData = await response.json()
+        setError(errorData.error || 'Failed to create post')
       }
     } catch (error) {
       console.error('Error creating post:', error)
+      setError('Network error. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -107,6 +117,13 @@ export function ReplyForm({ thread }: ReplyFormProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
+          {error && (
+            <Alert variant="destructive" className="mb-6">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="content">Content</Label>
@@ -121,17 +138,31 @@ export function ReplyForm({ thread }: ReplyFormProps) {
                 maxLength={10000}
               />
               <div className="text-sm text-muted-foreground">
-                {content.length}/10000 characters (minimum 10)
+                {content.length}/10000 characters 
+                {content.length > 0 && content.length < 10 && (
+                  <span className="text-orange-600 ml-2">
+                    (minimum 10 characters required)
+                  </span>
+                )}
               </div>
             </div>
 
             <div className="flex gap-3">
-              <Button type="submit" disabled={isLoading || !content.trim() || content.length < 10}>
+              <Button 
+                type="submit" 
+                disabled={isFormDisabled}
+                className="min-w-[120px]"
+              >
                 {isLoading ? 'Posting...' : 'Post Reply'}
               </Button>
               <Button type="button" variant="outline" asChild>
                 <Link href={`/forums/threads/${thread.id}`}>Cancel</Link>
               </Button>
+              {!isContentValid && content.length > 0 && (
+                <span className="text-sm text-muted-foreground self-center">
+                  {10 - content.trim().length} more characters needed
+                </span>
+              )}
             </div>
           </form>
         </CardContent>

@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
-import { NewThreadForm } from '../../new-thread/new-thread-form'
+import { NewThreadForm } from '../../../new-thread/new-thread-form'
 
 interface TopicNewThreadPageProps {
   params: Promise<{ id: string }>

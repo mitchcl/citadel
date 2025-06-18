@@ -105,7 +105,7 @@ export default async function HomePage() {
                       {/* Post Header - similar to old Citadel */}
                       <div className="mb-4">
                         <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
-                          <time dateTime={thread.created_at}>
+                          <time dateTime={new Date(thread.created_at).toISOString()}>
                             {new Date(thread.created_at).toLocaleDateString('en-US', {
                               year: 'numeric',
                               month: 'long',

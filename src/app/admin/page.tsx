@@ -44,7 +44,7 @@ export default async function AdminDashboard() {
     const pendingMatches = await tx.match.count({ where: { status: 0 } })
 
     // Recent forum posts (last 24 hours)
-    const recentForumPosts = await tx.forumPost.count({
+    const recentForumPosts = await tx.forumsPost.count({
       where: {
         created_at: {
           gte: new Date(Date.now() - 24 * 60 * 60 * 1000)
@@ -270,7 +270,7 @@ export default async function AdminDashboard() {
                   <div>
                     <h4 className="font-medium">{roster.name}</h4>
                     <p className="text-sm text-muted-foreground">
-                      {roster.team.name} • {roster.division.league.name} • {roster._count.players} players
+                      {roster.team.name} • {roster.division?.league?.name || 'No League'} • {roster._count?.players || 0} players
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -308,7 +308,7 @@ export default async function AdminDashboard() {
                   <div key={roster.id} className="p-3 border rounded-lg">
                     <h4 className="font-semibold text-sm">{roster.name}</h4>
                     <p className="text-xs text-muted-foreground">
-                      {roster.team.name} → {roster.league.name}
+                      {roster.team.name} → {roster.league?.name || 'No League'}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {new Date(roster.created_at).toLocaleDateString()}

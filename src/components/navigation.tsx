@@ -77,7 +77,7 @@ export function Navigation() {
                   Rules
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56">
+              <DropdownMenuContent align="start" className="w-56 bg-white border border-gray-200 shadow-lg z-50">
                 <DropdownMenuLabel>Competitive Rulesets</DropdownMenuLabel>
                 <DropdownMenuItem asChild>
                   <Link href="https://docs.ozfortress.com/rules/global" target="_blank" rel="noopener">
@@ -141,7 +141,7 @@ export function Navigation() {
                   Help
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56">
+              <DropdownMenuContent align="start" className="w-56 bg-white border border-gray-200 shadow-lg z-50">
                 <DropdownMenuLabel>General Info</DropdownMenuLabel>
                 <DropdownMenuItem asChild>
                   <Link href="https://docs.ozfortress.com/info/staff" target="_blank" rel="noopener">
@@ -253,7 +253,7 @@ export function Navigation() {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuContent className="w-56 bg-white border border-gray-200 shadow-lg z-50" align="end" forceMount>
                 <div className="flex items-center justify-start gap-2 p-2">
                   <div className="flex flex-col space-y-1 leading-none">
                     <p className="font-medium">{session.user?.name}</p>
